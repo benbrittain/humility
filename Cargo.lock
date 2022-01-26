@@ -33,6 +33,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "ansi_term"
+version = "0.12.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d52a9bb7ec0cf484c551830a7ce27bd20d67eac647e1befb56b0be4ee39a55d2"
+dependencies = [
+ "winapi",
+]
+
+[[package]]
 name = "anyhow"
 version = "1.0.56"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -272,6 +281,21 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "clap"
+version = "2.34.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a0610544180c38b88101fecf2dd634b174a62eef6946f84dfc6a7127512b381c"
+dependencies = [
+ "ansi_term",
+ "atty",
+ "bitflags",
+ "strsim 0.8.0",
+ "textwrap 0.11.0",
+ "unicode-width",
+ "vec_map",
+]
+
+[[package]]
+name = "clap"
 version = "3.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d8c93436c21e4698bacadf42917db28b23017027a4deccb35dbe47a7e7840123"
@@ -282,9 +306,9 @@ dependencies = [
  "indexmap",
  "lazy_static",
  "os_str_bytes",
- "strsim",
+ "strsim 0.10.0",
  "termcolor",
- "textwrap",
+ "textwrap 0.15.0",
 ]
 
 [[package]]
@@ -293,7 +317,7 @@ version = "3.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "da95d038ede1a964ce99f49cbe27a7fb538d1da595e4b4f70b8c8f338d17bf16"
 dependencies = [
- "heck",
+ "heck 0.4.0",
  "proc-macro-error",
  "proc-macro2",
  "quote",
@@ -556,7 +580,7 @@ dependencies = [
  "ident_case",
  "proc-macro2",
  "quote",
- "strsim",
+ "strsim 0.10.0",
  "syn",
 ]
 
@@ -762,6 +786,15 @@ dependencies = [
 
 [[package]]
 name = "heck"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d621efb26863f0e9924c6ac577e8275e5e6b77455db64ffa6c65c904e9e132c"
+dependencies = [
+ "unicode-segmentation",
+]
+
+[[package]]
+name = "heck"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2540771e65fc8cb83cd6e8a237f70c319bd5c29f78ed1084ba5d50eeac86f7f9"
@@ -819,7 +852,7 @@ dependencies = [
  "anyhow",
  "bitfield",
  "cargo_metadata",
- "clap",
+ "clap 3.1.6",
  "colored",
  "csv",
  "env_logger",
@@ -882,7 +915,7 @@ name = "humility-cmd"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "colored",
  "hif",
  "humility-core",
@@ -899,7 +932,7 @@ name = "humility-cmd-apptable"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
 ]
@@ -909,7 +942,7 @@ name = "humility-cmd-dashboard"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "crossterm",
  "hif",
  "humility-cmd",
@@ -926,7 +959,7 @@ name = "humility-cmd-diagnose"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "parse_int",
@@ -938,7 +971,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "cargo_metadata",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "lazy_static",
@@ -950,7 +983,7 @@ name = "humility-cmd-dump"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "log",
@@ -961,7 +994,7 @@ name = "humility-cmd-etm"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "csv",
  "humility-cmd",
  "humility-core",
@@ -975,7 +1008,7 @@ name = "humility-cmd-flash"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "humility-cortex",
@@ -992,7 +1025,7 @@ name = "humility-cmd-gpio"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1004,7 +1037,7 @@ name = "humility-cmd-hash"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1019,7 +1052,7 @@ name = "humility-cmd-hiffy"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1034,7 +1067,7 @@ name = "humility-cmd-i2c"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1048,7 +1081,7 @@ name = "humility-cmd-itm"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "csv",
  "humility-cmd",
  "humility-core",
@@ -1062,7 +1095,7 @@ name = "humility-cmd-jefe"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "log",
@@ -1074,7 +1107,7 @@ name = "humility-cmd-lpc55gpio"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1086,7 +1119,7 @@ name = "humility-cmd-manifest"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
 ]
@@ -1096,7 +1129,7 @@ name = "humility-cmd-map"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
 ]
@@ -1106,7 +1139,7 @@ name = "humility-cmd-pmbus"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "colored",
  "hif",
  "humility-cmd",
@@ -1122,7 +1155,7 @@ name = "humility-cmd-probe"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "humility-cortex",
@@ -1135,7 +1168,7 @@ name = "humility-cmd-qspi"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1149,7 +1182,7 @@ name = "humility-cmd-readmem"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "parse_int",
@@ -1160,7 +1193,7 @@ name = "humility-cmd-readvar"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
 ]
@@ -1170,7 +1203,7 @@ name = "humility-cmd-renbb"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1185,7 +1218,7 @@ name = "humility-cmd-rencm"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "csv",
  "hif",
  "humility-cmd",
@@ -1204,7 +1237,7 @@ name = "humility-cmd-ringbuf"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "log",
@@ -1215,7 +1248,7 @@ name = "humility-cmd-sensors"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1230,7 +1263,7 @@ name = "humility-cmd-spd"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1245,7 +1278,7 @@ name = "humility-cmd-spi"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-core",
@@ -1258,7 +1291,7 @@ name = "humility-cmd-stackmargin"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
 ]
@@ -1268,7 +1301,7 @@ name = "humility-cmd-stmsecure"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "parse_int",
@@ -1279,7 +1312,7 @@ name = "humility-cmd-tasks"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "num-traits",
@@ -1290,7 +1323,7 @@ name = "humility-cmd-test"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "humility-cortex",
@@ -1301,7 +1334,7 @@ name = "humility-cmd-trace"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "humility-cmd",
  "humility-core",
  "humility-cortex",
@@ -1312,7 +1345,7 @@ name = "humility-cmd-vsc7448"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "clap",
+ "clap 3.1.6",
  "hif",
  "humility-cmd",
  "humility-cmd-spi",
@@ -1347,6 +1380,7 @@ dependencies = [
  "rustc-demangle",
  "scroll",
  "serde",
+ "structopt",
  "toml",
  "zip",
 ]
@@ -2389,9 +2423,39 @@ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
 
 [[package]]
 name = "strsim"
+version = "0.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
+
+[[package]]
+name = "strsim"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
+
+[[package]]
+name = "structopt"
+version = "0.3.26"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c6b5c64445ba8094a6ab0c3cd2ad323e07171012d9c98b0b15651daf1787a10"
+dependencies = [
+ "clap 2.34.0",
+ "lazy_static",
+ "structopt-derive",
+]
+
+[[package]]
+name = "structopt-derive"
+version = "0.4.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dcb5ae327f9cc13b68763b5749770cb9e048a99bd9dfdfa58d0cf05d5f64afe0"
+dependencies = [
+ "heck 0.3.3",
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "svg"
@@ -2477,6 +2541,15 @@ checksum = "633c1a546cee861a1a6d0dc69ebeca693bf4296661ba7852b9d21d159e0506df"
 dependencies = [
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "textwrap"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d326610f408c7a4eb6f51c37c330e496b08506c9457c9d34287ecc38809fb060"
+dependencies = [
+ "unicode-width",
 ]
 
 [[package]]
@@ -2616,6 +2689,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "accd4ea62f7bb7a82fe23066fb0957d48ef677f6eeb8215f372f52e48bb32426"
 
 [[package]]
+name = "vec_map"
+version = "0.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f1bddf1187be692e79c5ffeab891132dfb0f236ed36a43c7ed39f1165ee20191"
+
+[[package]]
 name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2744,7 +2823,7 @@ version = "1.0.0"
 dependencies = [
  "anyhow",
  "cargo_metadata",
- "clap",
+ "clap 3.1.6",
 ]
 
 [[package]]

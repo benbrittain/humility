@@ -16,13 +16,23 @@ use std::collections::HashMap;
 //
 include!(concat!(env!("OUT_DIR"), "/cmds.rs"));
 
+use crate::repl;
+
 pub fn init(
     app: ClapCommand<'static>,
 ) -> (HashMap<&'static str, Command>, ClapCommand<'static>) {
     let mut cmds = HashMap::new();
     let mut rval = app;
 
-    for dcmd in dcmds() {
+    let mut dcmds = dcmds();
+
+    // add in the repl
+    dcmds.push(CommandDescription {
+        init: repl::init,
+        docmsg: "For additional documentation, run \"humility doc repl\"",
+    });
+
+    for dcmd in dcmds {
         let (cmd, subcmd) = (dcmd.init)();
 
         let name = match cmd {

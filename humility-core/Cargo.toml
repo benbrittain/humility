@@ -5,6 +5,7 @@ edition = "2021"
 license = "MPL-2.0"
 
 [dependencies]
+structopt = "0.3"
 serde = { version = "1.0.126", features = ["derive"] }
 goblin = "0.2.1"
 rustc-demangle = "0.1.21"
@@ -37,4 +38,3 @@ probe-rs = { git = "https://github.com/oxidecomputer/probe-rs.git", branch = "ox
 # which upstream seems uninterested in fixing.
 #
 capstone = {git = "https://github.com/oxidecomputer/capstone-rs.git"}
-

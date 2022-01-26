@@ -2,34 +2,31 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+use std::collections::HashMap;
+use std::ffi::OsString;
+
+use clap::ArgMatches;
+use humility_cmd::Command;
 use humility_cmd::{Args, Subcommand};
 
 use clap::CommandFactory;
 use clap::FromArgMatches;
 use clap::Parser;
+use anyhow::Result;
 
 mod cmd;
+mod repl;
 
 fn main() {
-    //
-    // This isn't hugely efficient, but we actually parse our arguments
-    // twice: the first is with our subcommands grafted into our
-    // arguments to get us a unified help and error message in the event
-    // of any parsing value or request for a help message; if that works,
-    // we parse our arguments again but relying on the
-    // external_subcommand to directive to allow our subcommand to do any
-    // parsing on its own.
-    //
-    let (commands, clap) = cmd::init(Args::command());
+    run(&mut std::env::args_os());
+}
 
-    let m = clap.get_matches();
-    let _args = Args::from_arg_matches(&m);
-
-    //
-    // If we're here, we know that our arguments pass muster from the
-    // Structopt/ Clap perspective.
-    //
-    let mut args = Args::parse();
+pub fn run<I, T>(input: I)
+where
+    I: IntoIterator<Item = T>,
+    T: Into<OsString> + Clone,
+{
+    let (commands, m, mut args) = parse_args(input);
 
     //
     // The only condition under which we don't require a command is if
@@ -89,6 +86,36 @@ fn main() {
         }
     }
 
+    execute_subcommand(commands, args);
+}
+
+pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Args)
+where
+    I: IntoIterator<Item = T>,
+    T: Into<OsString> + Clone,
+{
+    /*
+     * This isn't hugely efficient, but we actually parse our arguments
+     * twice: the first is with our subcommands grafted into our
+     * arguments to get us a unified help and error message in the event
+     * of any parsing value or request for a help message; if that works,
+     * we parse our arguments again but relying on the
+     * external_subcommand to directive to allow our subcommand to do any
+     * parsing on its own.
+     */
+    let (commands, clap) = cmd::init(Args::command());
+
+    let m = clap.get_matches_from(input);
+    let _args = Args::from_arg_matches(&m);
+
+    /*
+     * If we're here, we know that our arguments pass muster from the
+     * Structopt/ Clap perspective.
+     */
+    (commands, m, Args::parse())
+}
+
+pub fn execute_subcommand(commands: HashMap<&'static str, Command>, args: Args) -> Result<()> {
     //
     // This unwrap is safe -- we have checked that cmd is non-None above.
     //
@@ -98,6 +125,8 @@ fn main() {
         eprintln!("humility {} failed: {:?}", subargs[0], err);
         std::process::exit(1);
     }
+
+    Ok(())
 }
 
 #[test]
