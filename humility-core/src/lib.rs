@@ -28,3 +28,15 @@ macro_rules! msg {
         eprintln!(concat!("humility: ", $fmt), $($arg)*);
     });
 }
+
+pub struct Context {
+    pub core: Option<Box<dyn core::Core>>,
+}
+
+impl Context {
+    pub fn new() -> Context {
+        Context { 
+            core: None,
+         }
+    }
+}

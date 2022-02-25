@@ -51,6 +51,7 @@ use humility_cmd::{Archive, Args, Command};
 struct ManifestArgs {}
 
 fn manifestcmd(
+    _context: &mut humility::Context,
     hubris: &mut HubrisArchive,
     _args: &Args,
     _subargs: &[String],

@@ -143,11 +143,13 @@ struct ReadmemArgs {
 }
 
 fn readmem(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = ReadmemArgs::try_parse_from(subargs)?;
     let max = humility::core::CORE_MAX_READSIZE;
     let size = if subargs.word || subargs.symbol {

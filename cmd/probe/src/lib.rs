@@ -103,11 +103,13 @@ struct ProbeArgs {}
 
 #[rustfmt::skip::macros(format)]
 fn probecmd(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     _subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     use num_traits::FromPrimitive;
     let mut status = vec![];
 

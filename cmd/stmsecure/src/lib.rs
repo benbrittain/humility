@@ -296,11 +296,13 @@ fn stmsecure_swapbanks(core: &mut dyn Core) -> Result<()> {
 
 #[rustfmt::skip::macros(format)]
 fn stmsecure(
+    context: &mut humility::Context,
     _hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = StmSecureArgs::try_parse_from(subargs)?;
 
     match subargs {

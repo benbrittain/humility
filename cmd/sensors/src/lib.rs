@@ -232,11 +232,13 @@ fn print(
 }
 
 fn sensors(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = SensorsArgs::try_parse_from(subargs)?;
 
     let types = if let Some(ref types) = subargs.types {

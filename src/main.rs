@@ -17,6 +17,7 @@ use anyhow::Result;
 mod cmd;
 mod repl;
 
+
 fn main() {
     run(&mut std::env::args_os());
 }
@@ -45,6 +46,9 @@ where
     let env = env_logger::Env::default().filter_or("RUST_LOG", log_level);
 
     env_logger::init_from_env(env);
+
+    let mut context = humility::Context::new();
+
 
     //
     // Check to see if we have both a dump and an archive.  Because these
@@ -86,7 +90,7 @@ where
         }
     }
 
-    execute_subcommand(commands, args);
+    execute_subcommand(&mut context, commands, args).unwrap();
 }
 
 pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Args)
@@ -105,26 +109,26 @@ where
      */
     let (commands, clap) = cmd::init(Args::command());
 
-    let m = clap.get_matches_from(input);
+    let input: Vec<_> = input.into_iter().collect();
+    let input2 = input.clone();
+
+    let m = clap.get_matches_from(input.into_iter());
     let _args = Args::from_arg_matches(&m);
 
     /*
      * If we're here, we know that our arguments pass muster from the
      * Structopt/ Clap perspective.
      */
-    (commands, m, Args::parse())
+    (commands, m, Args::parse_from(input2.into_iter()))
 }
 
-pub fn execute_subcommand(commands: HashMap<&'static str, Command>, args: Args) -> Result<()> {
+pub fn execute_subcommand(context: &mut humility::Context, commands: HashMap<&'static str, Command>, args: Args) -> Result<()> {
     //
     // This unwrap is safe -- we have checked that cmd is non-None above.
     //
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
 
-    if let Err(err) = cmd::subcommand(&commands, &args, subargs) {
-        eprintln!("humility {} failed: {:?}", subargs[0], err);
-        std::process::exit(1);
-    }
+    cmd::subcommand(context, &commands, &args, subargs)?;
 
     Ok(())
 }

@@ -207,11 +207,13 @@ fn hiffy_call(
 }
 
 fn hiffy(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = HiffyArgs::try_parse_from(subargs)?;
 
     if subargs.list {

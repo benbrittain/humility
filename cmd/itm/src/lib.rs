@@ -243,6 +243,7 @@ fn itmcmd_ingest_attached(
 }
 
 fn itmcmd(
+    _context: &mut humility::Context,
     hubris: &mut HubrisArchive,
     args: &Args,
     subargs: &[String],

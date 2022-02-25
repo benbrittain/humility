@@ -787,6 +787,7 @@ fn rencm_ingest(subargs: &RencmArgs, modules: &[Module]) -> Result<()> {
 }
 
 fn rencm(
+    context: &mut humility::Context,
     hubris: &mut HubrisArchive,
     args: &Args,
     subargs: &[String],
@@ -798,8 +799,9 @@ fn rencm(
         return rencm_ingest(&subargs, modules);
     }
 
-    attach(hubris, args, Attach::LiveOnly, Validate::Booted, |hubris, core| {
-        rencm_attached(hubris, core, &subargs, modules)
+    attach(context, hubris, args, Attach::LiveOnly, Validate::Booted, |hubris, context| {
+        let core = context.core.as_mut().unwrap();
+        rencm_attached(hubris, &mut **core, &subargs, modules)
     })
 }
 

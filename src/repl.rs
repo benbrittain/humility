@@ -20,8 +20,8 @@ struct State {
 }
 
 fn repl(
+    context: &mut humility::Context,
     _hubris: &HubrisArchive,
-    _core: &mut dyn Core,
     _args: &Args,
     _subargs: &[String],
 ) -> Result<()> {
@@ -34,7 +34,7 @@ fn repl(
         io::stdout().flush()?;
 
         io::stdin().read_line(&mut input)?;
-        let result = eval(&state, &input)?;
+        let result = eval(context, &state, &input)?;
         println!("{}", result);
 
         state.history.push(input.clone());
@@ -42,19 +42,25 @@ fn repl(
     }
 }
 
-fn eval(state: &State, input: &str) -> Result<String> {
+fn eval(context: &mut humility::Context, state: &State, input: &str) -> Result<String> {
     match input.trim() {
         "quit" => {
             println!("Quitting!");
             std::process::exit(0);
         }
         "history" => Ok(state.history.join("").trim().to_string()),
-        input => {
-            let (commands, _, args) = crate::parse_args(input.split(' '));
-            crate::execute_subcommand(commands, args);
-            Ok(String::from(
-                "I'm sorry, Dave. I'm afraid I can't understand that.",
-            ))
+        user_input => {
+            let mut input = vec!["humility"];
+            input.extend(user_input.split(' '));
+
+            let (commands, _, args) = crate::parse_args(input);
+            if let Err(_) = crate::execute_subcommand(context, commands, args) {
+                Ok(String::from(
+                    "I'm sorry, Dave. I'm afraid I can't understand that.",
+                ))
+            } else {
+                Ok(String::from("It worked!"))
+            }
         }
     }
 }

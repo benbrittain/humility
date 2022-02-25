@@ -233,11 +233,13 @@ fn print_regs(regs: &HashMap<ARMRegister, u32>, additional: bool) {
 
 #[rustfmt::skip::macros(println)]
 fn tasks(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = TasksArgs::try_parse_from(subargs)?;
 
     let base = core.read_word_32(hubris.lookup_symword("TASK_TABLE_BASE")?)?;

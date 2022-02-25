@@ -84,11 +84,13 @@ fn section(title: &str) {
 }
 
 fn diagnose(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = DiagnoseArgs::try_parse_from(subargs)?;
 
     section("Initial Inspection");

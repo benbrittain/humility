@@ -121,11 +121,13 @@ fn taskname<'a>(
 // an attribute to a macro invoction, so we have to put it here instead.
 #[allow(clippy::print_literal)]
 fn ringbuf(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = RingbufArgs::try_parse_from(subargs)?;
 
     let mut ringbufs = vec![];

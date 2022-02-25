@@ -50,8 +50,7 @@
 
 use anyhow::Result;
 use clap::Command as ClapCommand;
-use clap::{CommandFactory, Parser};
-use humility::core::Core;
+use clap::{CommandFactory, Parser, IntoApp};
 use humility::hubris::*;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 
@@ -62,11 +61,13 @@ struct DumpArgs {
 }
 
 fn dumpcmd(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = DumpArgs::try_parse_from(subargs)?;
 
     let _info = core.halt()?;

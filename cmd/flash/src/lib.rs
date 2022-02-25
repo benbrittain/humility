@@ -72,6 +72,7 @@ struct FlashConfig {
 }
 
 fn flashcmd(
+    context: &mut humility::Context,
     hubris: &mut HubrisArchive,
     args: &Args,
     subargs: &[String],

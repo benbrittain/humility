@@ -49,6 +49,7 @@ pub fn init(
 }
 
 pub fn subcommand(
+    context: &mut humility::Context,
     commands: &HashMap<&'static str, Command>,
     args: &Args,
     subargs: &[String],
@@ -81,15 +82,16 @@ pub fn subcommand(
         match command {
             Command::Attached { run, attach, validate, .. } => {
                 humility_cmd::attach(
+                    context,
                     &hubris,
                     args,
                     *attach,
                     *validate,
-                    |h, core| (run)(h, core, args, subargs),
+                    |h, context| (run)(context, h, args, subargs),
                 )
             }
             Command::Unattached { run, .. } => {
-                (run)(&mut hubris, args, subargs)
+                (run)(context, &mut hubris, args, subargs)
             }
         }
     } else {

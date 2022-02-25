@@ -85,11 +85,13 @@ fn readvar_dump(
 }
 
 fn readvar(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = ReadvarArgs::try_parse_from(subargs)?;
 
     if subargs.list {

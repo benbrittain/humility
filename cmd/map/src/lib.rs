@@ -73,11 +73,13 @@ use humility_cmd::{Archive, Args, Attach, Command, Validate};
 struct MapArgs {}
 
 fn mapcmd(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     _subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let regions = hubris.regions(core)?;
 
     println!(

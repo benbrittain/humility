@@ -145,11 +145,13 @@ fn set_page(ops: &mut Vec<Op>, i2c_write: &HiffyFunction, page: u8) {
 }
 
 fn spd(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = SpdArgs::try_parse_from(subargs)?;
 
     //

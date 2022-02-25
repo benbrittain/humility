@@ -120,11 +120,13 @@ struct JefeArgs {
 }
 
 fn jefe(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = JefeArgs::try_parse_from(subargs)?;
 
     let request = if subargs.fault {

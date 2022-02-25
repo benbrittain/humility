@@ -28,7 +28,9 @@ struct DocArgs {
     command: Option<String>,
 }
 
+
 fn doc(
+    _context: &mut humility::Context,
     _hubris: &mut HubrisArchive,
     _args: &Args,
     subargs: &[String],

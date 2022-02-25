@@ -201,11 +201,13 @@ fn tracecmd_ingest(
 }
 
 fn tracecmd(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = &TraceArgs::try_parse_from(subargs)?;
     let mut tasks: HashMap<u32, String> = HashMap::new();
 

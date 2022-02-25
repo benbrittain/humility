@@ -328,11 +328,13 @@ impl<'a> Vsc7448<'a> {
 }
 
 fn vsc7448(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = Vsc7448Args::try_parse_from(subargs)?;
     let mut vsc = Vsc7448::new(hubris, core, &subargs)?;
     if !subargs.noinit {
@@ -443,6 +445,7 @@ fn vsc7448(
 }
 
 fn vsc7448_get_info(
+    _context: &mut humility::Context,
     hubris: &mut HubrisArchive,
     _args: &Args,
     subargs: &[String],

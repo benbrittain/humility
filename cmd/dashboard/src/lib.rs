@@ -660,11 +660,13 @@ fn run_dashboard<B: Backend>(
 }
 
 fn dashboard(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut ** context.core.as_mut().unwrap();
+
     let subargs = DashboardArgs::try_parse_from(subargs)?;
     let dashboard = Dashboard::new(hubris, core, &subargs)?;
 

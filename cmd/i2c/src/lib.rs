@@ -423,11 +423,13 @@ fn i2c_done(
 }
 
 fn i2c(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = I2cArgs::try_parse_from(subargs)?;
 
     if !subargs.scan

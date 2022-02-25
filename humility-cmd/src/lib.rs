@@ -14,8 +14,9 @@ use anyhow::{bail, Result};
 use clap::{AppSettings, Parser};
 use humility::core::Core;
 use humility::hubris::*;
+use std::fmt;
 
-#[derive(Parser)]
+#[derive(Parser, Debug)]
 #[clap(name = "humility", max_term_width = 80)]
 #[clap(global_setting(AppSettings::NoAutoVersion))]
 pub struct Args {
@@ -52,7 +53,7 @@ pub struct Args {
     pub cmd: Option<Subcommand>,
 }
 
-#[derive(Parser)]
+#[derive(Parser, Debug)]
 pub enum Subcommand {
     #[clap(external_subcommand)]
     Other(Vec<String>),
@@ -94,14 +95,40 @@ pub enum Command {
         archive: Archive,
         attach: Attach,
         validate: Validate,
-        run: fn(&HubrisArchive, &mut dyn Core, &Args, &[String]) -> Result<()>,
+        run: fn(&mut humility::Context, &HubrisArchive, &Args, &[String]) -> Result<()>,
     },
     Unattached {
         name: &'static str,
         archive: Archive,
-        run: fn(&mut HubrisArchive, &Args, &[String]) -> Result<()>,
+        run: fn(&mut humility::Context, &mut HubrisArchive, &Args, &[String]) -> Result<()>,
     },
 }
+
+impl fmt::Debug for Command {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            Command::Attached{name, archive, attach, validate, .. } => {
+                fmt.debug_struct("Command::Attached")
+                    .field("name", name)
+                    .field("archive", archive)
+                    .field("attach", attach)
+                    .field("validate", validate)
+                    .field("run", &"{fn}")
+                    .finish()
+
+            }
+            Command::Unattached{name, archive, .. } => {
+                fmt.debug_struct("Command::Unattached")
+                    .field("name", name)
+                    .field("archive", archive)
+                    .field("run", &"{fn}")
+                    .finish()
+
+            }
+        }
+    }
+}
+
 
 pub fn attach_live(args: &Args) -> Result<Box<dyn Core>> {
     if args.dump.is_some() {
@@ -128,37 +155,42 @@ pub fn attach_dump(
 }
 
 pub fn attach(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
     args: &Args,
     attach: Attach,
     validate: Validate,
-    mut run: impl FnMut(&HubrisArchive, &mut dyn Core) -> Result<()>,
+    mut run: impl FnMut(&HubrisArchive, &mut humility::Context) -> Result<()>,
 ) -> Result<()> {
-    let mut c = match attach {
-        Attach::LiveOnly => attach_live(args),
-        Attach::DumpOnly => attach_dump(args, hubris),
-        Attach::Any => {
-            if args.dump.is_some() {
-                attach_dump(args, hubris)
-            } else {
-                attach_live(args)
+    if context.core.is_none() {
+        context.core = Some(
+            match attach {
+            Attach::LiveOnly => attach_live(args),
+            Attach::DumpOnly => attach_dump(args, hubris),
+            Attach::Any => {
+                if args.dump.is_some() {
+                    attach_dump(args, hubris)
+                } else {
+                    attach_live(args)
+                }
             }
-        }
-    }?;
+        }?);
+    }
 
-    let core = c.as_mut();
+    // we know from above we have set up a core if we hadn't previously
+    let core = context.core.as_mut().unwrap();
 
     match validate {
         Validate::Booted => {
-            hubris.validate(core, HubrisValidate::Booted)?;
+            hubris.validate(&mut **core, HubrisValidate::Booted)?;
         }
         Validate::Match => {
-            hubris.validate(core, HubrisValidate::ArchiveMatch)?;
+            hubris.validate(&mut **core, HubrisValidate::ArchiveMatch)?;
         }
         Validate::None => {}
     }
 
-    (run)(hubris, core)
+    (run)(hubris, context)
 }
 
 pub struct Dumper {

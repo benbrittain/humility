@@ -6,7 +6,6 @@ use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
 use clap::{ArgGroup, CommandFactory, Parser};
 
-use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
@@ -102,11 +101,13 @@ struct HashArgs {
 }
 
 fn hash(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
+    let core = &mut **context.core.as_mut().unwrap();
+
     let subargs = HashArgs::try_parse_from(subargs)?;
     let mut context = HiffyContext::new(hubris, core, subargs.timeout)?;
     let funcs = context.functions()?;

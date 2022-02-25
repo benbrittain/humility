@@ -1284,8 +1284,8 @@ fn writes(
 
 #[allow(clippy::print_literal)]
 fn pmbus(
+    context: &mut humility::Context,
     hubris: &HubrisArchive,
-    core: &mut dyn Core,
     _args: &Args,
     subargs: &[String],
 ) -> Result<()> {
@@ -1319,6 +1319,8 @@ fn pmbus(
 
         return Ok(());
     }
+
+    let core = &mut **context.core.as_mut().unwrap();
 
     let mut context = HiffyContext::new(hubris, core, subargs.timeout)?;
     let funcs = context.functions()?;
