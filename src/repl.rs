@@ -54,9 +54,9 @@ fn eval(context: &mut humility::Context, state: &State, input: &str) -> Result<S
             input.extend(user_input.split(' '));
 
             let (commands, _, args) = crate::parse_args(input);
-            if let Err(_) = crate::execute_subcommand(context, commands, args) {
-                Ok(String::from(
-                    "I'm sorry, Dave. I'm afraid I can't understand that.",
+            if let Err(e) = crate::execute_subcommand(context, commands, args) {
+                Ok(format!(
+                    "I'm sorry, Dave. I'm afraid I can't understand that. {e}",
                 ))
             } else {
                 Ok(String::from("It worked!"))
