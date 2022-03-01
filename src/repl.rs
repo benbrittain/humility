@@ -13,6 +13,8 @@ use clap::Command as ClapCommand;
 
 use std::io::{self, Write};
 
+use crate::cmd;
+
 fn repl(
     context: &mut humility::ExecutionContext,
     _hubris: &HubrisArchive,
@@ -47,7 +49,7 @@ fn eval(context: &mut humility::ExecutionContext, input: &str) -> Result<String>
             input.extend(user_input.split(' '));
 
             let (commands, _, args) = crate::parse_args(input);
-            if let Err(e) = crate::execute_subcommand(context, commands, args) {
+            if let Err(e) = cmd::subcommand(context, &commands, &args) {
                 Ok(format!(
                     "I'm sorry, Dave. I'm afraid I can't understand that. {e}",
                 ))

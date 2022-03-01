@@ -5,9 +5,10 @@
 use std::collections::HashMap;
 use std::ffi::OsString;
 
+use anyhow::bail;
 use clap::ArgMatches;
 use humility_cmd::Command;
-use humility_cmd::{Args, Subcommand};
+use humility_cmd::Args;
 
 use clap::CommandFactory;
 use clap::FromArgMatches;
@@ -18,16 +19,8 @@ mod cmd;
 mod repl;
 
 
-fn main() {
-    run(&mut std::env::args_os());
-}
-
-pub fn run<I, T>(input: I)
-where
-    I: IntoIterator<Item = T>,
-    T: Into<OsString> + Clone,
-{
-    let (commands, m, mut args) = parse_args(input);
+fn main() -> Result<()> {
+    let (commands, m, mut args) = parse_args(&mut std::env::args_os());
 
     //
     // The only condition under which we don't require a command is if
@@ -35,10 +28,9 @@ where
     //
     if args.version {
         println!("{} {}", env!("CARGO_BIN_NAME"), env!("CARGO_PKG_VERSION"));
-        std::process::exit(0);
+        return Ok(());
     } else if args.cmd.is_none() {
-        eprintln!("humility failed: subcommand expected (--help to list)");
-        std::process::exit(1);
+        bail!("humility failed: subcommand expected (--help to list)");
     }
 
     let log_level = if args.verbose { "trace" } else { "warn" };
@@ -48,7 +40,6 @@ where
     env_logger::init_from_env(env);
 
     let mut context = humility::ExecutionContext::new();
-
 
     //
     // Check to see if we have both a dump and an archive.  Because these
@@ -61,17 +52,15 @@ where
         match (m.occurrences_of("dump") == 1, m.occurrences_of("archive") == 1)
         {
             (true, true) => {
-                log::error!("cannot specify both a dump and an archive");
-                std::process::exit(1);
+                bail!("cannot specify both a dump and an archive");
             }
 
             (false, false) => {
-                log::error!(
+                bail!(
                     "both dump and archive have been set via environment \
                     variables; unset one of them, or use a command-line option \
                     to override"
                 );
-                std::process::exit(1);
             }
 
             (true, false) => {
@@ -90,7 +79,7 @@ where
         }
     }
 
-    execute_subcommand(&mut context, commands, args).unwrap();
+    cmd::subcommand(&mut context, &commands, &args)
 }
 
 pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Args)
@@ -120,17 +109,6 @@ where
      * Structopt/ Clap perspective.
      */
     (commands, m, Args::parse_from(input2.into_iter()))
-}
-
-pub fn execute_subcommand(context: &mut humility::ExecutionContext, commands: HashMap<&'static str, Command>, args: Args) -> Result<()> {
-    //
-    // This unwrap is safe -- we have checked that cmd is non-None above.
-    //
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
-
-    cmd::subcommand(context, &commands, &args, subargs)?;
-
-    Ok(())
 }
 
 #[test]
