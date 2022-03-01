@@ -31,7 +31,7 @@
 //! 0x00000010 | 00 00 00 00 ff ff ff 06 12 00 00 00 06          | .............
 //! ```
 //!
-use humility::core::Core;
+
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::{Archive, Args, Attach, Command, Dumper, Validate};

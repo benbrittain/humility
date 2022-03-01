@@ -114,7 +114,6 @@
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::{Archive, Args, Attach, Command, Dumper, Validate};
 use std::convert::TryInto;

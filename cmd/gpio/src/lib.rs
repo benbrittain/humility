@@ -92,7 +92,6 @@
 //! ```
 //!
 
-use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};

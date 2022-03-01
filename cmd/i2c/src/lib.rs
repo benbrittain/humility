@@ -95,7 +95,6 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use hif::*;
-use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::{Archive, Args, Attach, Command, Dumper, Validate};

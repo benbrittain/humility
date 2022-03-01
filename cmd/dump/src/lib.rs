@@ -50,7 +50,7 @@
 
 use anyhow::Result;
 use clap::Command as ClapCommand;
-use clap::{CommandFactory, Parser, IntoApp};
+use clap::{CommandFactory, Parser};
 use humility::hubris::*;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 
