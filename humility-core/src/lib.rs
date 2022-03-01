@@ -31,12 +31,14 @@ macro_rules! msg {
 
 pub struct Context {
     pub core: Option<Box<dyn core::Core>>,
+    pub history: Vec<String>,
 }
 
 impl Context {
     pub fn new() -> Context {
         Context { 
             core: None,
+            history: Vec::new(),
          }
     }
 }
