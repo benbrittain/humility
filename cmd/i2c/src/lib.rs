@@ -423,7 +423,7 @@ fn i2c_done(
 }
 
 fn i2c(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

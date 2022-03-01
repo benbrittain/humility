@@ -95,12 +95,12 @@ pub enum Command {
         archive: Archive,
         attach: Attach,
         validate: Validate,
-        run: fn(&mut humility::Context, &HubrisArchive, &Args, &[String]) -> Result<()>,
+        run: fn(&mut humility::ExecutionContext, &HubrisArchive, &Args, &[String]) -> Result<()>,
     },
     Unattached {
         name: &'static str,
         archive: Archive,
-        run: fn(&mut humility::Context, &mut HubrisArchive, &Args, &[String]) -> Result<()>,
+        run: fn(&mut humility::ExecutionContext, &mut HubrisArchive, &Args, &[String]) -> Result<()>,
     },
 }
 
@@ -155,12 +155,12 @@ pub fn attach_dump(
 }
 
 pub fn attach(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     args: &Args,
     attach: Attach,
     validate: Validate,
-    mut run: impl FnMut(&HubrisArchive, &mut humility::Context) -> Result<()>,
+    mut run: impl FnMut(&HubrisArchive, &mut humility::ExecutionContext) -> Result<()>,
 ) -> Result<()> {
     if context.core.is_none() {
         context.core = Some(

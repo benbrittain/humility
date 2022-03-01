@@ -283,7 +283,7 @@ fn test_ingest(
 }
 
 fn test(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

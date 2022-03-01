@@ -41,7 +41,7 @@ struct StackmarginArgs {}
 
 #[rustfmt::skip::macros(println, bail)]
 fn stackmargin(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     _subargs: &[String],

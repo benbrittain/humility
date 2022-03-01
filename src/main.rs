@@ -47,7 +47,7 @@ where
 
     env_logger::init_from_env(env);
 
-    let mut context = humility::Context::new();
+    let mut context = humility::ExecutionContext::new();
 
 
     //
@@ -122,7 +122,7 @@ where
     (commands, m, Args::parse_from(input2.into_iter()))
 }
 
-pub fn execute_subcommand(context: &mut humility::Context, commands: HashMap<&'static str, Command>, args: Args) -> Result<()> {
+pub fn execute_subcommand(context: &mut humility::ExecutionContext, commands: HashMap<&'static str, Command>, args: Args) -> Result<()> {
     //
     // This unwrap is safe -- we have checked that cmd is non-None above.
     //

@@ -85,7 +85,7 @@ fn readvar_dump(
 }
 
 fn readvar(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

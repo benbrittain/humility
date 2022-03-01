@@ -29,14 +29,14 @@ macro_rules! msg {
     });
 }
 
-pub struct Context {
+pub struct ExecutionContext {
     pub core: Option<Box<dyn core::Core>>,
     pub history: Vec<String>,
 }
 
-impl Context {
-    pub fn new() -> Context {
-        Context { 
+impl ExecutionContext {
+    pub fn new() -> ExecutionContext {
+        ExecutionContext { 
             core: None,
             history: Vec::new(),
          }

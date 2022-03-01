@@ -787,7 +787,7 @@ fn rencm_ingest(subargs: &RencmArgs, modules: &[Module]) -> Result<()> {
 }
 
 fn rencm(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &mut HubrisArchive,
     args: &Args,
     subargs: &[String],

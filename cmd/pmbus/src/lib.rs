@@ -1284,7 +1284,7 @@ fn writes(
 
 #[allow(clippy::print_literal)]
 fn pmbus(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

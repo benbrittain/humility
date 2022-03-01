@@ -145,7 +145,7 @@ fn set_page(ops: &mut Vec<Op>, i2c_write: &HiffyFunction, page: u8) {
 }
 
 fn spd(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

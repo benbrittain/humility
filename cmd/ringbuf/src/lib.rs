@@ -121,7 +121,7 @@ fn taskname<'a>(
 // an attribute to a macro invoction, so we have to put it here instead.
 #[allow(clippy::print_literal)]
 fn ringbuf(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

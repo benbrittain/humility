@@ -328,7 +328,7 @@ impl<'a> Vsc7448<'a> {
 }
 
 fn vsc7448(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],
@@ -445,7 +445,7 @@ fn vsc7448(
 }
 
 fn vsc7448_get_info(
-    _context: &mut humility::Context,
+    _context: &mut humility::ExecutionContext,
     hubris: &mut HubrisArchive,
     _args: &Args,
     subargs: &[String],

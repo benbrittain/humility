@@ -296,7 +296,7 @@ fn stmsecure_swapbanks(core: &mut dyn Core) -> Result<()> {
 
 #[rustfmt::skip::macros(format)]
 fn stmsecure(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     _hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

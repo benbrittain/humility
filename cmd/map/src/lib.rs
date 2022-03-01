@@ -73,7 +73,7 @@ use humility_cmd::{Archive, Args, Attach, Command, Validate};
 struct MapArgs {}
 
 fn mapcmd(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     _subargs: &[String],

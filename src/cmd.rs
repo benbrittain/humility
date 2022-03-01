@@ -49,7 +49,7 @@ pub fn init(
 }
 
 pub fn subcommand(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     commands: &HashMap<&'static str, Command>,
     args: &Args,
     subargs: &[String],

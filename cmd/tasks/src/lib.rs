@@ -233,7 +233,7 @@ fn print_regs(regs: &HashMap<ARMRegister, u32>, additional: bool) {
 
 #[rustfmt::skip::macros(println)]
 fn tasks(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

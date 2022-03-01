@@ -143,7 +143,7 @@ fn optional_nbytes<'a>(
 }
 
 fn qspi(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

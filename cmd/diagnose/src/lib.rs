@@ -84,7 +84,7 @@ fn section(title: &str) {
 }
 
 fn diagnose(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

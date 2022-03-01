@@ -660,7 +660,7 @@ fn run_dashboard<B: Backend>(
 }
 
 fn dashboard(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     hubris: &HubrisArchive,
     _args: &Args,
     subargs: &[String],

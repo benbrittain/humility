@@ -25,7 +25,7 @@ struct ApptableArgs {
 
 #[rustfmt::skip::macros(println, bail)]
 fn apptablecmd(
-    _context: &mut humility::Context,
+    _context: &mut humility::ExecutionContext,
     hubris: &mut HubrisArchive,
     _args: &Args,
     subargs: &[String],

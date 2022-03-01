@@ -14,7 +14,7 @@ use clap::Command as ClapCommand;
 use std::io::{self, Write};
 
 fn repl(
-    context: &mut humility::Context,
+    context: &mut humility::ExecutionContext,
     _hubris: &HubrisArchive,
     _args: &Args,
     _subargs: &[String],
@@ -35,7 +35,7 @@ fn repl(
     }
 }
 
-fn eval(context: &mut humility::Context, input: &str) -> Result<String> {
+fn eval(context: &mut humility::ExecutionContext, input: &str) -> Result<String> {
     match input.trim() {
         "quit" => {
             println!("Quitting!");
