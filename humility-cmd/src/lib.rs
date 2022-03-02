@@ -11,53 +11,11 @@ pub mod reflect;
 pub mod test;
 
 use anyhow::{bail, Result};
-use clap::{AppSettings, Parser};
+use humility::cli::Cli;
 use humility::core::Core;
 use humility::hubris::*;
 use std::fmt;
 
-#[derive(Parser, Debug)]
-#[clap(name = "humility", max_term_width = 80)]
-#[clap(global_setting(AppSettings::NoAutoVersion))]
-pub struct Cli {
-    /// verbose messages
-    #[clap(long, short)]
-    pub verbose: bool,
-
-    /// print version information
-    #[clap(long, short = 'V')]
-    pub version: bool,
-
-    /// specific chip on attached device
-    #[clap(
-        long,
-        short,
-        env = "HUMILITY_CHIP",
-        default_value = "STM32F407VGTx"
-    )]
-    pub chip: String,
-
-    /// chip probe to use
-    #[clap(long, short, env = "HUMILITY_PROBE", conflicts_with = "dump")]
-    pub probe: Option<String>,
-
-    /// Hubris archive
-    #[clap(long, short, env = "HUMILITY_ARCHIVE")]
-    pub archive: Option<String>,
-
-    /// Hubris dump
-    #[clap(long, short, env = "HUMILITY_DUMP")]
-    pub dump: Option<String>,
-
-    #[clap(subcommand)]
-    pub cmd: Option<Subcommand>,
-}
-
-#[derive(Parser, Debug)]
-pub enum Subcommand {
-    #[clap(external_subcommand)]
-    Other(Vec<String>),
-}
 
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]

@@ -7,7 +7,8 @@
 //! read, eval, print, loop
 
 use anyhow::Result;
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::{Archive, Attach, Command, Validate};
+use humility::cli::Cli;
 use clap::Command as ClapCommand;
 
 use std::io::{self, Write};

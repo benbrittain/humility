@@ -86,8 +86,9 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
 use humility_cmd::jefe::{send_request, JefeRequest};
-use humility_cmd::{Archive, Cli, Attach, Command, Validate, Subcommand};
+use humility_cmd::{Archive, Attach, Command, Validate};
 use std::num::NonZeroU32;
+use humility::cli::{Cli, Subcommand};
 
 #[derive(Parser, Debug)]
 #[clap(name = "jefe", about = env!("CARGO_PKG_DESCRIPTION"))]

@@ -43,7 +43,8 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility_cmd::{Archive, Cli, Command};
+use humility_cmd::{Archive, Command};
+use humility::cli::Cli;
 
 #[derive(Parser, Debug)]
 #[clap(name = "manifest", about = env!("CARGO_PKG_DESCRIPTION"))]

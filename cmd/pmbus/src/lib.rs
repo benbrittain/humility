@@ -5,9 +5,10 @@
 use colored::Colorize;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, Subcommand};
+use humility_cmd::hiffy::*;
+use humility::cli::{Cli, Subcommand};
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::{Archive, Attach, Command, Validate};
 
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;

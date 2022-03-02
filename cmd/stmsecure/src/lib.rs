@@ -32,7 +32,8 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::arch::ARMRegister;
 use humility::core::Core;
-use humility_cmd::{Archive, Cli, Attach, Command, Validate, Subcommand};
+use humility_cmd::{Archive, Attach, Command, Validate};
+use humility::cli::{Cli, Subcommand};
 
 const FLASH_OPT_KEY1: u32 = 0x0819_2A3B;
 const FLASH_OPT_KEY2: u32 = 0x4C5D_6E7F;

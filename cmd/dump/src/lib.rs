@@ -51,7 +51,8 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility_cmd::{Archive, Cli, Attach, Command, Validate, Subcommand};
+use humility_cmd::{Archive, Attach, Command, Validate};
+use humility::cli::{Cli, Subcommand};
 
 #[derive(Parser, Debug)]
 #[clap(name = "dump", about = env!("CARGO_PKG_DESCRIPTION"))]

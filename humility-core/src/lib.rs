@@ -7,6 +7,7 @@ use hubris::HubrisArchive;
 pub mod arch;
 pub mod core;
 pub mod hubris;
+pub mod cli;
 
 #[macro_use]
 extern crate num_derive;

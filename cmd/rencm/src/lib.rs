@@ -10,9 +10,10 @@
 
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, Subcommand};
+use humility_cmd::hiffy::*;
+use humility::cli::{Cli, Subcommand};
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{attach, Archive, Cli, Attach, Command, Dumper, Validate};
+use humility_cmd::{attach, Archive, Attach, Command, Dumper, Validate};
 
 use itertools::Itertools;
 

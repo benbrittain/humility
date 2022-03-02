@@ -2,8 +2,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-use humility_cmd::{hiffy::*, Subcommand};
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::hiffy::*;
+use humility_cmd::{Archive, Attach, Command, Validate};
+use humility::cli::{Cli, Subcommand};
 use std::str;
 
 use anyhow::{bail, Result};

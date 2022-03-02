@@ -20,7 +20,8 @@ use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{Archive, Cli, Command, Subcommand};
+use humility_cmd::{Archive, Command};
+use humility::cli::{Cli, Subcommand};
 use path_slash::PathExt;
 use std::io::Write;
 

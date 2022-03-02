@@ -3,7 +3,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use humility::core::Core;
-use humility_cmd::{hiffy::*, Subcommand, Archive, Cli, Attach, Command, Dumper, Validate};
+use humility_cmd::{hiffy::*, Archive, Attach, Command, Dumper, Validate};
+use humility::cli::{Cli, Subcommand};
 use std::fmt;
 use std::fs;
 use std::fs::File;

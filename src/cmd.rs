@@ -5,7 +5,7 @@
 use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use humility::hubris::*;
-use humility_cmd::{Cli, Subcommand};
+use humility::cli::{Cli, Subcommand};
 use humility_cmd::{Archive, Command};
 use std::collections::HashMap;
 

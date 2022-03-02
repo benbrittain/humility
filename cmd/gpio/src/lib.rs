@@ -92,8 +92,9 @@
 //! ```
 //!
 
-use humility_cmd::{hiffy::*, Subcommand};
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::hiffy::HiffyContext;
+use humility_cmd::{Archive, Attach, Command, Validate};
+use humility::cli::{Cli, Subcommand};
 use std::str;
 
 use anyhow::{bail, Result};

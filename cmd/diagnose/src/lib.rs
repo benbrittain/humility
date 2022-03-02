@@ -20,9 +20,10 @@ use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::doppel::{GenOrRestartCount, Task, TaskDesc, TaskState};
-use humility_cmd::{jefe, Subcommand};
+use humility_cmd::jefe;
 use humility_cmd::reflect;
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::{Archive, Attach, Command, Validate};
+use humility::cli::{Cli, Subcommand};
 use std::num::NonZeroU32;
 use std::time::Duration;
 

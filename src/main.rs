@@ -8,7 +8,7 @@ use std::ffi::OsString;
 use anyhow::bail;
 use clap::ArgMatches;
 use humility_cmd::Command;
-use humility_cmd::Cli;
+use humility::cli::Cli;
 
 use clap::CommandFactory;
 use clap::FromArgMatches;

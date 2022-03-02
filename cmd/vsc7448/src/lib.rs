@@ -7,7 +7,8 @@ use std::convert::TryInto;
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::{HiffyContext, HiffyFunctions};
-use humility_cmd::{Archive, Cli, Attach, Validate, Subcommand};
+use humility_cmd::{Archive, Attach, Validate};
+use humility::cli::{Cli, Subcommand};
 use humility_cmd_spi::spi_task;
 
 use anyhow::{anyhow, bail, Result};

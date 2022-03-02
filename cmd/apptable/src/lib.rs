@@ -13,7 +13,8 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::HubrisPrintFormat;
-use humility_cmd::{Archive, Cli, Command, Subcommand};
+use humility_cmd::{Archive, Command};
+use humility::cli::{Cli, Subcommand};
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]

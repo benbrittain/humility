@@ -13,7 +13,8 @@
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{IntoApp, Parser};
-use humility_cmd::{Archive, Command, Subcommand, Cli};
+use humility::cli::{Cli, Subcommand};
+use humility_cmd::{Archive, Command};
 use std::collections::HashMap;
 use termimad::*;
 

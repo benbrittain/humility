@@ -33,8 +33,9 @@
 //!
 
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, Subcommand};
-use humility_cmd::{Archive, Cli, Attach, Command, Dumper, Validate};
+use humility_cmd::hiffy::*;
+use humility_cmd::{Archive, Attach, Command, Dumper, Validate};
+use humility::cli::{Cli, Subcommand};
 
 use std::convert::TryInto;
 use std::str;

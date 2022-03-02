@@ -95,8 +95,9 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use hif::*;
-use humility_cmd::{hiffy::*, Subcommand};
-use humility_cmd::{Archive, Cli, Attach, Command, Dumper, Validate};
+use humility_cmd::hiffy::*;
+use humility_cmd::{Archive, Attach, Command, Dumper, Validate};
+use humility::cli::{Cli, Subcommand};
 
 use std::collections::HashMap;
 use std::fs;

@@ -115,7 +115,8 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{Archive, Cli, Attach, Command, Dumper, Validate, Subcommand};
+use humility_cmd::{Archive, Attach, Command, Dumper, Validate};
+use humility::cli::{Cli, Subcommand};
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]

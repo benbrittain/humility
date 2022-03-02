@@ -26,9 +26,10 @@ use crossterm::{
 use hif::*;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, Subcommand};
+use humility_cmd::hiffy::*;
+use humility::cli::{Cli, Subcommand};
 use humility_cmd::idol;
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::{Archive, Attach, Command, Validate};
 use std::fs::File;
 use std::io;
 use std::io::Write;

@@ -41,7 +41,7 @@
 //! within Humility, use `-L` (`--list-functions`).
 //!
 
-use humility_cmd::Subcommand;
+use humility::cli::{Cli, Subcommand};
 use ::idol::syntax::{Operation, Reply};
 use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
@@ -51,7 +51,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::idol;
-use humility_cmd::{Archive, Cli, Attach, Command, Validate};
+use humility_cmd::{Archive, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
 #[clap(name = "hiffy", about = env!("CARGO_PKG_DESCRIPTION"))]
