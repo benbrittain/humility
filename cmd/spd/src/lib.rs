@@ -4,7 +4,7 @@
 
 use humility_cmd::{hiffy::*, Subcommand};
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 use std::str;
 
 use anyhow::{bail, Result};
@@ -144,7 +144,7 @@ fn set_page(ops: &mut Vec<Op>, i2c_write: &HiffyFunction, page: u8) {
 
 fn spd(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

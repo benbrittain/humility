@@ -7,7 +7,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::{hiffy::*, Subcommand};
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
@@ -1285,7 +1285,7 @@ fn writes(
 #[allow(clippy::print_literal)]
 fn pmbus(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
 
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();

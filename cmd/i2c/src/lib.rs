@@ -96,7 +96,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use hif::*;
 use humility_cmd::{hiffy::*, Subcommand};
-use humility_cmd::{Archive, Args, Attach, Command, Dumper, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Dumper, Validate};
 
 use std::collections::HashMap;
 use std::fs;
@@ -422,7 +422,7 @@ fn i2c_done(
 
 fn i2c(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();

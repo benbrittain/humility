@@ -12,7 +12,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::{hiffy::*, Subcommand};
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{attach, Archive, Args, Attach, Command, Dumper, Validate};
+use humility_cmd::{attach, Archive, Cli, Attach, Command, Dumper, Validate};
 
 use itertools::Itertools;
 
@@ -788,7 +788,7 @@ fn rencm_ingest(subargs: &RencmArgs, modules: &[Module]) -> Result<()> {
 
 fn rencm(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
     let subargs = RencmArgs::try_parse_from(subargs)?;

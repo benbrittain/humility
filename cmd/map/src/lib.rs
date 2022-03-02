@@ -64,7 +64,7 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
 #[clap(name = "map", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -72,7 +72,7 @@ struct MapArgs {}
 
 fn mapcmd(
     context: &mut humility::ExecutionContext,
-    _args: &Args,
+    _args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
 

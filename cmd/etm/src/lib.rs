@@ -9,7 +9,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::Subcommand;
 use humility_cmd::attach_live;
-use humility_cmd::Args;
+use humility_cmd::Cli;
 use humility_cmd::{Archive, Command};
 use humility_cortex::debug::*;
 use humility_cortex::etm::*;
@@ -557,7 +557,7 @@ fn etmcmd_output(core: &mut dyn Core) -> Result<()> {
 
 fn etmcmd(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

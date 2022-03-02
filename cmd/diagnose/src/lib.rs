@@ -22,7 +22,7 @@ use humility::hubris::*;
 use humility_cmd::doppel::{GenOrRestartCount, Task, TaskDesc, TaskState};
 use humility_cmd::{jefe, Subcommand};
 use humility_cmd::reflect;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 use std::num::NonZeroU32;
 use std::time::Duration;
 
@@ -85,7 +85,7 @@ fn section(title: &str) {
 
 fn diagnose(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();

@@ -19,7 +19,7 @@ use std::fmt;
 #[derive(Parser, Debug)]
 #[clap(name = "humility", max_term_width = 80)]
 #[clap(global_setting(AppSettings::NoAutoVersion))]
-pub struct Args {
+pub struct Cli {
     /// verbose messages
     #[clap(long, short)]
     pub verbose: bool,
@@ -95,12 +95,12 @@ pub enum Command {
         archive: Archive,
         attach: Attach,
         validate: Validate,
-        run: fn(&mut humility::ExecutionContext, &Args) -> Result<()>,
+        run: fn(&mut humility::ExecutionContext, &Cli) -> Result<()>,
     },
     Unattached {
         name: &'static str,
         archive: Archive,
-        run: fn(&mut humility::ExecutionContext, &Args) -> Result<()>,
+        run: fn(&mut humility::ExecutionContext, &Cli) -> Result<()>,
     },
 }
 
@@ -130,7 +130,7 @@ impl fmt::Debug for Command {
 }
 
 
-pub fn attach_live(args: &Args) -> Result<Box<dyn Core>> {
+pub fn attach_live(args: &Cli) -> Result<Box<dyn Core>> {
     if args.dump.is_some() {
         bail!("must be run against a live system");
     } else {
@@ -144,7 +144,7 @@ pub fn attach_live(args: &Args) -> Result<Box<dyn Core>> {
 }
 
 pub fn attach_dump(
-    args: &Args,
+    args: &Cli,
     hubris: &HubrisArchive,
 ) -> Result<Box<dyn Core>> {
     if let Some(dump) = &args.dump {
@@ -156,7 +156,7 @@ pub fn attach_dump(
 
 pub fn attach(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
     attach: Attach,
     validate: Validate,
     mut run: impl FnMut(&mut humility::ExecutionContext) -> Result<()>,

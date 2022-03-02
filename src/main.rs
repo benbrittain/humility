@@ -8,7 +8,7 @@ use std::ffi::OsString;
 use anyhow::bail;
 use clap::ArgMatches;
 use humility_cmd::Command;
-use humility_cmd::Args;
+use humility_cmd::Cli;
 
 use clap::CommandFactory;
 use clap::FromArgMatches;
@@ -82,7 +82,7 @@ fn main() -> Result<()> {
     cmd::subcommand(&mut context, &commands, &args)
 }
 
-pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Args)
+pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Cli)
 where
     I: IntoIterator<Item = T>,
     T: Into<OsString> + Clone,
@@ -96,23 +96,23 @@ where
      * external_subcommand to directive to allow our subcommand to do any
      * parsing on its own.
      */
-    let (commands, clap) = cmd::init(Args::command());
+    let (commands, clap) = cmd::init(Cli::command());
 
     let input: Vec<_> = input.into_iter().collect();
     let input2 = input.clone();
 
     let m = clap.get_matches_from(input.into_iter());
-    let _args = Args::from_arg_matches(&m);
+    let _args = Cli::from_arg_matches(&m);
 
     /*
      * If we're here, we know that our arguments pass muster from the
      * Structopt/ Clap perspective.
      */
-    (commands, m, Args::parse_from(input2.into_iter()))
+    (commands, m, Cli::parse_from(input2.into_iter()))
 }
 
 #[test]
 fn validate_clap() {
-    let (_, clap) = cmd::init(Args::command());
+    let (_, clap) = cmd::init(Cli::command());
     clap.clone().debug_assert();
 }

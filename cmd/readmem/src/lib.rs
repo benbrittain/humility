@@ -115,7 +115,7 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{Archive, Args, Attach, Command, Dumper, Validate, Subcommand};
+use humility_cmd::{Archive, Cli, Attach, Command, Dumper, Validate, Subcommand};
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]
@@ -143,7 +143,7 @@ struct ReadmemArgs {
 
 fn readmem(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();

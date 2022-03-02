@@ -7,7 +7,7 @@
 //! read, eval, print, loop
 
 use anyhow::Result;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 use clap::Command as ClapCommand;
 
 use std::io::{self, Write};
@@ -16,7 +16,7 @@ use crate::cmd;
 
 fn repl(
     context: &mut humility::ExecutionContext,
-    _args: &Args,
+    _args: &Cli,
 ) -> Result<()> {
     let mut input = String::new();
 

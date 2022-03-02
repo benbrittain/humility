@@ -86,7 +86,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
 use humility_cmd::jefe::{send_request, JefeRequest};
-use humility_cmd::{Archive, Args, Attach, Command, Validate, Subcommand};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate, Subcommand};
 use std::num::NonZeroU32;
 
 #[derive(Parser, Debug)]
@@ -120,7 +120,7 @@ struct JefeArgs {
 
 fn jefe(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();

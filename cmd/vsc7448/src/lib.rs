@@ -7,7 +7,7 @@ use std::convert::TryInto;
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::{HiffyContext, HiffyFunctions};
-use humility_cmd::{Archive, Args, Attach, Validate, Subcommand};
+use humility_cmd::{Archive, Cli, Attach, Validate, Subcommand};
 use humility_cmd_spi::spi_task;
 
 use anyhow::{anyhow, bail, Result};
@@ -329,7 +329,7 @@ impl<'a> Vsc7448<'a> {
 
 fn vsc7448(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
@@ -446,7 +446,7 @@ fn vsc7448(
 
 fn vsc7448_get_info(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

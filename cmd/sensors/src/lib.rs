@@ -27,7 +27,7 @@ use humility::hubris::*;
 use humility_cmd::Subcommand;
 use humility_cmd::hiffy::*;
 use humility_cmd::idol;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 use std::collections::HashSet;
 use std::thread;
 use std::time::Duration;
@@ -234,7 +234,7 @@ fn print(
 
 fn sensors(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();

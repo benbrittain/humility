@@ -51,7 +51,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::idol;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Cli, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
 #[clap(name = "hiffy", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -209,7 +209,7 @@ fn hiffy_call(
 
 fn hiffy(
     context: &mut humility::ExecutionContext,
-    args: &Args,
+    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
