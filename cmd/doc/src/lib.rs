@@ -13,7 +13,7 @@
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{IntoApp, Parser};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use humility_cmd::{Archive, Command};
 use std::collections::HashMap;
 use termimad::*;
@@ -30,10 +30,9 @@ struct DocArgs {
 
 
 fn doc(
-    _context: &mut humility::ExecutionContext,
-    args: &Cli,
+    context: &mut humility::ExecutionContext,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let subargs = DocArgs::try_parse_from(subargs)?;
 
     let text = match subargs.command {

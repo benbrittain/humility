@@ -21,7 +21,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
 use humility_cmd::{Archive, Command};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use path_slash::PathExt;
 use std::io::Write;
 
@@ -74,9 +74,8 @@ struct FlashConfig {
 
 fn flashcmd(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
     let flash_config = hubris.load_flash_config()?;
     let subargs = FlashArgs::try_parse_from(subargs)?;
@@ -87,13 +86,13 @@ fn flashcmd(
     // We need to attach to (1) confirm that we're plugged into something
     // and (2) extract serial information.
     //
-    let probe = match &args.probe {
+    let probe = match &context.cli.probe {
         Some(p) => p,
         None => "auto",
     };
 
     let serial = {
-        let mut c = humility::core::attach(probe, &args.chip)?;
+        let mut c = humility::core::attach(probe, &context.cli.chip)?;
         let core = c.as_mut();
 
         //

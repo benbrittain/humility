@@ -39,7 +39,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::attach_live;
 use humility_cmd::{Archive, Command};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use humility_cortex::debug::*;
 use humility_cortex::dwt::*;
 use humility_cortex::itm::*;
@@ -245,9 +245,8 @@ fn itmcmd_ingest_attached(
 
 fn itmcmd(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = &ItmArgs::try_parse_from(subargs)?;
@@ -273,7 +272,7 @@ fn itmcmd(
     //
     // For all of the other commands, we need to actually attach to the chip.
     //
-    let mut c = attach_live(args)?;
+    let mut c = attach_live(&context.cli)?;
     let core = c.as_mut();
     hubris.validate(core, HubrisValidate::ArchiveMatch)?;
 

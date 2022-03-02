@@ -5,7 +5,7 @@
 use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use humility::hubris::*;
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use humility_cmd::{Archive, Command};
 use std::collections::HashMap;
 
@@ -51,12 +51,12 @@ pub fn init(
 pub fn subcommand(
     context: &mut humility::ExecutionContext,
     commands: &HashMap<&'static str, Command>,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
+    let subargs = subargs[0].clone();
 
-    let command = commands.get(&subargs[0].as_str())
-        .with_context(|| format!("command {} not found", subargs[0]))?;
+    let command = commands.get(&*subargs)
+        .with_context(|| format!("command {} not found", subargs))?;
 
     let archive = match command {
         Command::Attached { archive, .. } => archive,
@@ -67,11 +67,11 @@ pub fn subcommand(
         HubrisArchive::new().context("failed to initialize")?;
 
     if *archive != Archive::Ignored {
-        if let Some(archive) = &args.archive {
+        if let Some(archive) = &context.cli.archive {
             hubris.load(archive).with_context(|| {
                 format!("failed to load archive \"{}\"", archive)
             })?;
-        } else if let Some(dump) = &args.dump {
+        } else if let Some(dump) = &context.cli.dump {
             hubris.load_dump(dump).with_context(|| {
                 format!("failed to load dump \"{}\"", dump)
             })?;
@@ -88,14 +88,13 @@ pub fn subcommand(
         Command::Attached { run, attach, validate, .. } => {
             humility_cmd::attach(
                 context,
-                args,
                 *attach,
                 *validate,
-                |context| (run)(context, args),
+                |context| (run)(context),
             )
         }
         Command::Unattached { run, .. } => {
-            (run)(context, args)
+            (run)(context)
         }
     }
 }

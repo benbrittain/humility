@@ -42,7 +42,7 @@ use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::{Archive, Attach, Command, Validate};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 
 #[derive(Parser, Debug)]
 #[clap(name = "readvar", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -87,10 +87,9 @@ fn readvar_dump(
 
 fn readvar(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = ReadvarArgs::try_parse_from(subargs)?;

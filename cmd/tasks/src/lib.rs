@@ -120,7 +120,7 @@ use humility::hubris::*;
 use humility_cmd::doppel::{self, Task, TaskDesc, TaskId, TaskState};
 use humility_cmd::reflect::{self, Format, Load};
 use humility_cmd::{Archive, Attach, Command, Validate};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use num_traits::FromPrimitive;
 use std::collections::HashMap;
 
@@ -235,10 +235,9 @@ fn print_regs(regs: &HashMap<ARMRegister, u32>, additional: bool) {
 #[rustfmt::skip::macros(println)]
 fn tasks(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = TasksArgs::try_parse_from(subargs)?;

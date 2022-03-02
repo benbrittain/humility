@@ -9,7 +9,6 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility::cli::Subcommand;
 use humility_cmd::attach_live;
-use humility::cli::Cli;
 use humility_cmd::{Archive, Command};
 use humility_cortex::debug::*;
 use humility_cortex::etm::*;
@@ -557,9 +556,8 @@ fn etmcmd_output(core: &mut dyn Core) -> Result<()> {
 
 fn etmcmd(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = &EtmArgs::try_parse_from(subargs)?;
@@ -591,7 +589,7 @@ fn etmcmd(
     //
     // For all of the other commands, we need to actually attach to the chip.
     //
-    let mut core = attach_live(args)?;
+    let mut core = attach_live(&context.cli)?;
     let _info = core.halt()?;
 
     humility::msg!("core halted");

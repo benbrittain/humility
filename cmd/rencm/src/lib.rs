@@ -11,7 +11,7 @@
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use humility_cmd::i2c::I2cArgs;
 use humility_cmd::{attach, Archive, Attach, Command, Dumper, Validate};
 
@@ -789,9 +789,8 @@ fn rencm_ingest(subargs: &RencmArgs, modules: &[Module]) -> Result<()> {
 
 fn rencm(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let subargs = RencmArgs::try_parse_from(subargs)?;
     let modules = modules();
 
@@ -799,7 +798,7 @@ fn rencm(
         return rencm_ingest(&subargs, modules);
     }
 
-    attach(context,args, Attach::LiveOnly, Validate::Booted, |context| {
+    attach(context, Attach::LiveOnly, Validate::Booted, |context| {
         let core = context.core.as_mut().unwrap();
         let hubris = context.archive.as_ref().unwrap();
         rencm_attached(hubris, &mut **core, &subargs, modules)

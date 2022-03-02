@@ -8,7 +8,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::{HiffyContext, HiffyFunctions};
 use humility_cmd::{Archive, Attach, Validate};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use humility_cmd_spi::spi_task;
 
 use anyhow::{anyhow, bail, Result};
@@ -330,10 +330,9 @@ impl<'a> Vsc7448<'a> {
 
 fn vsc7448(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = Vsc7448Args::try_parse_from(subargs)?;
@@ -447,9 +446,8 @@ fn vsc7448(
 
 fn vsc7448_get_info(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
     assert!(!hubris.loaded());
     let subargs = Vsc7448Args::try_parse_from(subargs)?;

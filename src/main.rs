@@ -20,7 +20,7 @@ mod repl;
 
 
 fn main() -> Result<()> {
-    let (commands, m, mut args) = parse_args(&mut std::env::args_os());
+    let (commands, m, args) = parse_args(&mut std::env::args_os());
 
     //
     // The only condition under which we don't require a command is if
@@ -39,47 +39,9 @@ fn main() -> Result<()> {
 
     env_logger::init_from_env(env);
 
-    let mut context = humility::ExecutionContext::new();
+    let mut context = humility::ExecutionContext::new(args, &m)?;
 
-    //
-    // Check to see if we have both a dump and an archive.  Because these
-    // conflict with one another but because we allow both of them to be
-    // set with an environment variable, we need to manually resolve this:
-    // we want to allow an explicitly set value (that is, via the command
-    // line) to win the conflict.
-    //
-    if args.dump.is_some() && args.archive.is_some() {
-        match (m.occurrences_of("dump") == 1, m.occurrences_of("archive") == 1)
-        {
-            (true, true) => {
-                bail!("cannot specify both a dump and an archive");
-            }
-
-            (false, false) => {
-                bail!(
-                    "both dump and archive have been set via environment \
-                    variables; unset one of them, or use a command-line option \
-                    to override"
-                );
-            }
-
-            (true, false) => {
-                log::warn!(
-                    "dump on command-line overriding archive in environment"
-                );
-                args.archive = None;
-            }
-
-            (false, true) => {
-                log::warn!(
-                    "archive on command-line overriding dump in environment"
-                );
-                args.dump = None;
-            }
-        }
-    }
-
-    cmd::subcommand(&mut context, &commands, &args)
+    cmd::subcommand(&mut context, &commands)
 }
 
 pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Cli)

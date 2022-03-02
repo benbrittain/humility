@@ -14,7 +14,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::HubrisPrintFormat;
 use humility_cmd::{Archive, Command};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]
@@ -27,9 +27,8 @@ struct ApptableArgs {
 #[rustfmt::skip::macros(println, bail)]
 fn apptablecmd(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_mut().unwrap();
 
     let subargs = ApptableArgs::try_parse_from(subargs)?;

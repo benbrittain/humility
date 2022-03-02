@@ -44,7 +44,6 @@ use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility_cmd::{Archive, Command};
-use humility::cli::Cli;
 
 #[derive(Parser, Debug)]
 #[clap(name = "manifest", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -52,7 +51,6 @@ struct ManifestArgs {}
 
 fn manifestcmd(
     context: &mut humility::ExecutionContext,
-    _args: &Cli,
 ) -> Result<()> {
     let hubris = context.archive.as_ref().unwrap();
     hubris.manifest()?;

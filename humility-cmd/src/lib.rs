@@ -53,12 +53,12 @@ pub enum Command {
         archive: Archive,
         attach: Attach,
         validate: Validate,
-        run: fn(&mut humility::ExecutionContext, &Cli) -> Result<()>,
+        run: fn(&mut humility::ExecutionContext) -> Result<()>,
     },
     Unattached {
         name: &'static str,
         archive: Archive,
-        run: fn(&mut humility::ExecutionContext, &Cli) -> Result<()>,
+        run: fn(&mut humility::ExecutionContext) -> Result<()>,
     },
 }
 
@@ -114,7 +114,6 @@ pub fn attach_dump(
 
 pub fn attach(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
     attach: Attach,
     validate: Validate,
     mut run: impl FnMut(&mut humility::ExecutionContext) -> Result<()>,
@@ -124,13 +123,13 @@ pub fn attach(
     if context.core.is_none() {
         context.core = Some(
             match attach {
-            Attach::LiveOnly => attach_live(args),
-            Attach::DumpOnly => attach_dump(args, hubris),
+            Attach::LiveOnly => attach_live(&context.cli),
+            Attach::DumpOnly => attach_dump(&context.cli, hubris),
             Attach::Any => {
-                if args.dump.is_some() {
-                    attach_dump(args, hubris)
+                if context.cli.dump.is_some() {
+                    attach_dump(&context.cli, hubris)
                 } else {
-                    attach_live(args)
+                    attach_live(&context.cli)
                 }
             }
         }?);

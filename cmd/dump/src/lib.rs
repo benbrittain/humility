@@ -52,7 +52,7 @@ use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility_cmd::{Archive, Attach, Command, Validate};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 
 #[derive(Parser, Debug)]
 #[clap(name = "dump", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -62,10 +62,9 @@ struct DumpArgs {
 
 fn dumpcmd(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = DumpArgs::try_parse_from(subargs)?;

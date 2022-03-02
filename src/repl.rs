@@ -8,7 +8,6 @@
 
 use anyhow::Result;
 use humility_cmd::{Archive, Attach, Command, Validate};
-use humility::cli::Cli;
 use clap::Command as ClapCommand;
 
 use std::io::{self, Write};
@@ -17,7 +16,6 @@ use crate::cmd;
 
 fn repl(
     context: &mut humility::ExecutionContext,
-    _args: &Cli,
 ) -> Result<()> {
     let mut input = String::new();
 
@@ -46,8 +44,8 @@ fn eval(context: &mut humility::ExecutionContext, input: &str) -> Result<String>
             let mut input = vec!["humility"];
             input.extend(user_input.split(' '));
 
-            let (commands, _, args) = crate::parse_args(input);
-            if let Err(e) = cmd::subcommand(context, &commands, &args) {
+            let (commands, _, _args) = crate::parse_args(input);
+            if let Err(e) = cmd::subcommand(context, &commands) {
                 Ok(format!(
                     "I'm sorry, Dave. I'm afraid I can't understand that. {e}",
                 ))

@@ -4,7 +4,7 @@
 
 use humility::core::Core;
 use humility_cmd::{hiffy::*, Archive, Attach, Command, Dumper, Validate};
-use humility::cli::{Cli, Subcommand};
+use humility::cli::Subcommand;
 use std::fmt;
 use std::fs;
 use std::fs::File;
@@ -143,10 +143,9 @@ fn optional_nbytes<'a>(
 
 fn qspi(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
     let subargs = QspiArgs::try_parse_from(subargs)?;

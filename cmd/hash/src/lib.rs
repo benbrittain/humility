@@ -6,7 +6,7 @@ use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
 use clap::{ArgGroup, CommandFactory, Parser};
 
-use humility::cli::{Subcommand, Cli};
+use humility::cli::Subcommand;
 use humility_cmd::hiffy::*;
 use humility_cmd::{Archive, Attach, Command, Validate};
 use sha2::{Digest, Sha256};
@@ -102,10 +102,9 @@ struct HashArgs {
 
 fn hash(
     context: &mut humility::ExecutionContext,
-    args: &Cli,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
-    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
 
     let subargs = HashArgs::try_parse_from(subargs)?;
     let archive = context.archive.as_ref().unwrap();
