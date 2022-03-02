@@ -96,12 +96,12 @@ where
      * external_subcommand to directive to allow our subcommand to do any
      * parsing on its own.
      */
-    let (commands, clap) = cmd::init(Cli::command());
+    let (commands, command) = cmd::init(Cli::command());
 
     let input: Vec<_> = input.into_iter().collect();
     let input2 = input.clone();
 
-    let m = clap.get_matches_from(input.into_iter());
+    let m = command.get_matches_from(input.into_iter());
     let _args = Cli::from_arg_matches(&m);
 
     /*

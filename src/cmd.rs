@@ -19,10 +19,10 @@ include!(concat!(env!("OUT_DIR"), "/cmds.rs"));
 use crate::repl;
 
 pub fn init(
-    app: ClapCommand<'static>,
+    command: ClapCommand<'static>,
 ) -> (HashMap<&'static str, Command>, ClapCommand<'static>) {
     let mut cmds = HashMap::new();
-    let mut rval = app;
+    let mut rval = command;
 
     let mut dcmds = dcmds();
 
