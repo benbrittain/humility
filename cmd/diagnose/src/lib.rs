@@ -20,7 +20,7 @@ use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::doppel::{GenOrRestartCount, Task, TaskDesc, TaskState};
-use humility_cmd::jefe;
+use humility_cmd::{jefe, Subcommand};
 use humility_cmd::reflect;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 use std::num::NonZeroU32;
@@ -85,11 +85,11 @@ fn section(title: &str) {
 
 fn diagnose(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = DiagnoseArgs::try_parse_from(subargs)?;
 
@@ -314,7 +314,7 @@ fn diagnose(
         for &(name, i) in &tasks_worth_holding {
             println!("- {}", name);
             jefe::send_request(
-                hubris,
+                &hubris,
                 core,
                 jefe::JefeRequest::Hold,
                 i,

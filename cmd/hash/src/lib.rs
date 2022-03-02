@@ -6,9 +6,8 @@ use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
 use clap::{ArgGroup, CommandFactory, Parser};
 
-use humility::hubris::*;
-use humility_cmd::hiffy::*;
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{hiffy::*, Subcommand};
+use humility_cmd::{Archive, Attach, Command, Validate};
 use sha2::{Digest, Sha256};
 use std::fs::File;
 use std::io::Read;
@@ -102,14 +101,14 @@ struct HashArgs {
 
 fn hash(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: & humility_cmd::Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
 
     let subargs = HashArgs::try_parse_from(subargs)?;
-    let mut context = HiffyContext::new(hubris, core, subargs.timeout)?;
+    let archive = context.archive.as_ref().unwrap();
+    let mut context = HiffyContext::new(archive, core, subargs.timeout)?;
     let funcs = context.functions()?;
     let scratch_size = context.scratch_size();
     let mut ops = vec![];

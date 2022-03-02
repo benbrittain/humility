@@ -20,7 +20,7 @@ use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{Archive, Args, Command};
+use humility_cmd::{Archive, Args, Command, Subcommand};
 use path_slash::PathExt;
 use std::io::Write;
 
@@ -72,11 +72,11 @@ struct FlashConfig {
 }
 
 fn flashcmd(
-    _context: &mut humility::ExecutionContext,
-    hubris: &mut HubrisArchive,
+    context: &mut humility::ExecutionContext,
     args: &Args,
-    subargs: &[String],
 ) -> Result<()> {
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
     let flash_config = hubris.load_flash_config()?;
     let subargs = FlashArgs::try_parse_from(subargs)?;
 

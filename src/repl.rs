@@ -7,7 +7,6 @@
 //! read, eval, print, loop
 
 use anyhow::Result;
-use humility::hubris::*;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 use clap::Command as ClapCommand;
 
@@ -17,9 +16,7 @@ use crate::cmd;
 
 fn repl(
     context: &mut humility::ExecutionContext,
-    _hubris: &HubrisArchive,
     _args: &Args,
-    _subargs: &[String],
 ) -> Result<()> {
     let mut input = String::new();
 

@@ -92,8 +92,7 @@
 //! ```
 //!
 
-use humility::hubris::*;
-use humility_cmd::hiffy::*;
+use humility_cmd::{hiffy::*, Subcommand};
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 use std::str;
 
@@ -152,11 +151,11 @@ struct GpioArgs {
 
 fn gpio(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = GpioArgs::try_parse_from(subargs)?;
     let mut context = HiffyContext::new(hubris, core, subargs.timeout)?;

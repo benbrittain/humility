@@ -39,7 +39,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::doppel::{Ringbuf, StaticCell};
 use humility_cmd::reflect::{self, Format, Load, Value};
-use humility_cmd::{Archive, Args, Attach, Command, Validate};
+use humility_cmd::{Archive, Args, Attach, Command, Validate, Subcommand};
 
 #[derive(Parser, Debug)]
 #[clap(name = "ringbuf", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -122,11 +122,11 @@ fn taskname<'a>(
 #[allow(clippy::print_literal)]
 fn ringbuf(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = RingbufArgs::try_parse_from(subargs)?;
 

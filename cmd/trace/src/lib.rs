@@ -7,6 +7,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
+use humility_cmd::Subcommand;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 use humility_cortex::itm::*;
 use std::collections::HashMap;
@@ -202,11 +203,11 @@ fn tracecmd_ingest(
 
 fn tracecmd(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = &TraceArgs::try_parse_from(subargs)?;
     let mut tasks: HashMap<u32, String> = HashMap::new();

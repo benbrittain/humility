@@ -7,6 +7,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
+use humility_cmd::Subcommand;
 use humility_cmd::attach_live;
 use humility_cmd::Args;
 use humility_cmd::{Archive, Command};
@@ -555,11 +556,12 @@ fn etmcmd_output(core: &mut dyn Core) -> Result<()> {
 }
 
 fn etmcmd(
-    _context: &mut humility::ExecutionContext,
-    hubris: &mut HubrisArchive,
+    context: &mut humility::ExecutionContext,
     args: &Args,
-    subargs: &[String],
 ) -> Result<()> {
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
+
     let subargs = &EtmArgs::try_parse_from(subargs)?;
     let mut rval = Ok(());
 

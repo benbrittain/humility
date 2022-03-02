@@ -41,11 +41,10 @@ struct StackmarginArgs {}
 #[rustfmt::skip::macros(println, bail)]
 fn stackmargin(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
     _args: &Args,
-    _subargs: &[String],
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let regions = hubris.regions(core)?;
 

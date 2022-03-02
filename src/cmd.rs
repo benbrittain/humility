@@ -80,19 +80,20 @@ pub fn subcommand(
             bail!("must provide a Hubris archive or dump");
         }
 
+        context.archive = Some(hubris);
+
         match command {
             Command::Attached { run, attach, validate, .. } => {
                 humility_cmd::attach(
                     context,
-                    &hubris,
                     args,
                     *attach,
                     *validate,
-                    |h, context| (run)(context, h, args, subargs),
+                    |context| (run)(context, args),
                 )
             }
             Command::Unattached { run, .. } => {
-                (run)(context, &mut hubris, args, subargs)
+                (run)(context, args)
             }
         }
     } else {

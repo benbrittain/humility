@@ -2,6 +2,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+use hubris::HubrisArchive;
+
 pub mod arch;
 pub mod core;
 pub mod hubris;
@@ -32,6 +34,7 @@ macro_rules! msg {
 pub struct ExecutionContext {
     pub core: Option<Box<dyn core::Core>>,
     pub history: Vec<String>,
+    pub archive: Option<HubrisArchive>,
 }
 
 impl ExecutionContext {
@@ -39,6 +42,7 @@ impl ExecutionContext {
         ExecutionContext { 
             core: None,
             history: Vec::new(),
+            archive: None,
          }
     }
 }

@@ -37,7 +37,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::attach_live;
+use humility_cmd::{attach_live, Subcommand};
 use humility_cmd::{Archive, Args, Command};
 use humility_cortex::debug::*;
 use humility_cortex::dwt::*;
@@ -243,11 +243,12 @@ fn itmcmd_ingest_attached(
 }
 
 fn itmcmd(
-    _context: &mut humility::ExecutionContext,
-    hubris: &mut HubrisArchive,
+    context: &mut humility::ExecutionContext,
     args: &Args,
-    subargs: &[String],
 ) -> Result<()> {
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
+
     let subargs = &ItmArgs::try_parse_from(subargs)?;
     let mut rval = Ok(());
 

@@ -3,8 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use humility::core::Core;
-use humility::hubris::*;
-use humility_cmd::hiffy::*;
+use humility_cmd::{hiffy::*, Subcommand};
 use humility_cmd::{Archive, Args, Attach, Command, Dumper, Validate};
 use std::fmt;
 use std::fs;
@@ -144,11 +143,11 @@ fn optional_nbytes<'a>(
 
 fn qspi(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = QspiArgs::try_parse_from(subargs)?;
     let mut context = HiffyContext::new(hubris, core, subargs.timeout)?;

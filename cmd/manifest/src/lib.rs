@@ -43,7 +43,6 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility::hubris::HubrisArchive;
 use humility_cmd::{Archive, Args, Command};
 
 #[derive(Parser, Debug)]
@@ -51,11 +50,10 @@ use humility_cmd::{Archive, Args, Command};
 struct ManifestArgs {}
 
 fn manifestcmd(
-    _context: &mut humility::ExecutionContext,
-    hubris: &mut HubrisArchive,
+    context: &mut humility::ExecutionContext,
     _args: &Args,
-    _subargs: &[String],
 ) -> Result<()> {
+    let hubris = context.archive.as_ref().unwrap();
     hubris.manifest()?;
     Ok(())
 }

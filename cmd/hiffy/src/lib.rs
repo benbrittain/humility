@@ -41,6 +41,7 @@
 //! within Humility, use `-L` (`--list-functions`).
 //!
 
+use humility_cmd::Subcommand;
 use ::idol::syntax::{Operation, Reply};
 use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
@@ -208,11 +209,11 @@ fn hiffy_call(
 
 fn hiffy(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = HiffyArgs::try_parse_from(subargs)?;
 

@@ -112,7 +112,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::test::*;
+use humility_cmd::{test::*, Subcommand};
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 use humility_cortex::itm::*;
 use std::cell::RefCell;
@@ -284,11 +284,11 @@ fn test_ingest(
 
 fn test(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
-    _args: &Args,
-    subargs: &[String],
+    args: &Args,
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+    let Subcommand::Other(subargs) = args.cmd.as_ref().unwrap();
+    let hubris = context.archive.as_ref().unwrap();
 
     let subargs = TestArgs::try_parse_from(subargs)?;
 

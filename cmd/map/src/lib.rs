@@ -64,7 +64,6 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility::hubris::*;
 use humility_cmd::{Archive, Args, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
@@ -73,11 +72,11 @@ struct MapArgs {}
 
 fn mapcmd(
     context: &mut humility::ExecutionContext,
-    hubris: &HubrisArchive,
     _args: &Args,
-    _subargs: &[String],
 ) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
+
+    let hubris = context.archive.as_ref().unwrap();
 
     let regions = hubris.regions(core)?;
 
