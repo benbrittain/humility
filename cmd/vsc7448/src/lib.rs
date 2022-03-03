@@ -7,7 +7,7 @@ use std::convert::TryInto;
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::{HiffyContext, HiffyFunctions};
-use humility_cmd::{Archive, Attach, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Validate};
 use humility::cli::Subcommand;
 use humility_cmd_spi::spi_task;
 
@@ -484,7 +484,7 @@ pub fn init() -> (humility_cmd::Command, ClapCommand<'static>) {
     let subcmd_attached = (
         humility_cmd::Command::Attached {
             name: "vsc7448",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: vsc7448,
@@ -494,7 +494,7 @@ pub fn init() -> (humility_cmd::Command, ClapCommand<'static>) {
     let subcmd_unattached = (
         humility_cmd::Command::Unattached {
             name: "vsc7448",
-            archive: Archive::Ignored,
+            archive: ArchiveRequired::Ignored,
             run: vsc7448_get_info,
         },
         Vsc7448Args::command(),

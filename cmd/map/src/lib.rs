@@ -64,7 +64,7 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
 #[clap(name = "map", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -116,7 +116,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "map",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::Any,
             validate: Validate::Booted,
             run: mapcmd,

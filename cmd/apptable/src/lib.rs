@@ -13,7 +13,7 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::HubrisPrintFormat;
-use humility_cmd::{Archive, Command};
+use humility_cmd::{ArchiveRequired, Command};
 use humility::cli::Subcommand;
 use std::convert::TryInto;
 
@@ -159,7 +159,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Unattached {
             name: "apptable",
-            archive: Archive::Optional,
+            archive: ArchiveRequired::Optional,
             run: apptablecmd,
         },
         ApptableArgs::command().hide(true),

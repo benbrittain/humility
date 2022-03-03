@@ -8,7 +8,7 @@ use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility::cli::Subcommand;
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
@@ -1619,7 +1619,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "pmbus",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: pmbus,

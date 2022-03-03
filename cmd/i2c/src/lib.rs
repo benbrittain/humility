@@ -96,7 +96,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use hif::*;
 use humility_cmd::hiffy::*;
-use humility_cmd::{Archive, Attach, Command, Dumper, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Dumper, Validate};
 use humility::cli::Subcommand;
 
 use std::collections::HashMap;
@@ -716,7 +716,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "i2c",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: i2c,

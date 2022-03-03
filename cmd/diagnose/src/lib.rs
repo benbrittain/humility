@@ -22,7 +22,7 @@ use humility::hubris::*;
 use humility_cmd::doppel::{GenOrRestartCount, Task, TaskDesc, TaskState};
 use humility_cmd::jefe;
 use humility_cmd::reflect;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
 use std::num::NonZeroU32;
 use std::time::Duration;
@@ -32,7 +32,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "diagnose",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::Any,
             validate: Validate::Booted,
             run: diagnose,

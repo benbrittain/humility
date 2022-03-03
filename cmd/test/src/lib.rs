@@ -113,7 +113,7 @@ use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::test::*;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
 use humility_cortex::itm::*;
 use std::cell::RefCell;
@@ -305,7 +305,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "test",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: test,

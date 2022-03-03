@@ -6,7 +6,7 @@ use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use humility::hubris::*;
 use humility::cli::Subcommand;
-use humility_cmd::{Archive, Command};
+use humility_cmd::{ArchiveRequired, Command};
 use std::collections::HashMap;
 
 //
@@ -66,7 +66,7 @@ pub fn subcommand(
     let mut hubris =
         HubrisArchive::new().context("failed to initialize")?;
 
-    if *archive != Archive::Ignored {
+    if *archive != ArchiveRequired::Ignored {
         if let Some(archive) = &context.cli.archive {
             hubris.load(archive).with_context(|| {
                 format!("failed to load archive \"{}\"", archive)
@@ -78,7 +78,7 @@ pub fn subcommand(
         }
     }
 
-    if *archive == Archive::Required && !hubris.loaded() {
+    if *archive == ArchiveRequired::Required && !hubris.loaded() {
         bail!("must provide a Hubris archive or dump");
     }
 

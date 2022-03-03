@@ -51,7 +51,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility_cmd::idol;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
 #[clap(name = "hiffy", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -297,7 +297,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "hiffy",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: hiffy,

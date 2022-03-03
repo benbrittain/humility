@@ -9,7 +9,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility::cli::Subcommand;
 use humility_cmd::attach_live;
-use humility_cmd::{Archive, Command};
+use humility_cmd::{ArchiveRequired, Command};
 use humility_cortex::debug::*;
 use humility_cortex::etm::*;
 use humility_cortex::scs::*;
@@ -627,7 +627,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Unattached {
             name: "etm",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             run: etmcmd,
         },
         EtmArgs::command(),

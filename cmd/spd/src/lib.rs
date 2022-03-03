@@ -4,7 +4,7 @@
 
 use humility_cmd::hiffy::*;
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
 use std::str;
 
@@ -355,7 +355,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "spd",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::Any,
             validate: Validate::Booted,
             run: spd,

@@ -8,7 +8,7 @@ use clap::{ArgGroup, CommandFactory, Parser};
 
 use humility::cli::Subcommand;
 use humility_cmd::hiffy::*;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use sha2::{Digest, Sha256};
 use std::fs::File;
 use std::io::Read;
@@ -480,7 +480,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "hash",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: hash,

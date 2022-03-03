@@ -119,7 +119,7 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::doppel::{self, Task, TaskDesc, TaskId, TaskState};
 use humility_cmd::reflect::{self, Format, Load};
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
 use num_traits::FromPrimitive;
 use std::collections::HashMap;
@@ -650,7 +650,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "tasks",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::Any,
             validate: Validate::Booted,
             run: tasks,

@@ -41,7 +41,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
 
 #[derive(Parser, Debug)]
@@ -114,7 +114,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "readvar",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::Any,
             validate: Validate::Match,
             run: readvar,

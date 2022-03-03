@@ -3,7 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use humility::core::Core;
-use humility_cmd::{hiffy::*, Archive, Attach, Command, Dumper, Validate};
+use humility_cmd::{hiffy::*, ArchiveRequired, Attach, Command, Dumper, Validate};
 use humility::cli::Subcommand;
 use std::fmt;
 use std::fs;
@@ -632,7 +632,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "qspi",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: qspi,

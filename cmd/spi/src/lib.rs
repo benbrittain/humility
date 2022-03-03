@@ -34,7 +34,7 @@
 
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
-use humility_cmd::{Archive, Attach, Command, Dumper, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Dumper, Validate};
 use humility::cli::Subcommand;
 
 use std::convert::TryInto;
@@ -309,7 +309,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "spi",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::LiveOnly,
             validate: Validate::Booted,
             run: spi,

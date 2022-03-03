@@ -13,7 +13,7 @@ use humility::hubris::*;
 use humility_cmd::hiffy::*;
 use humility::cli::Subcommand;
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{attach, Archive, Attach, Command, Dumper, Validate};
+use humility_cmd::{attach, ArchiveRequired, Attach, Command, Dumper, Validate};
 
 use itertools::Itertools;
 
@@ -809,7 +809,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Unattached {
             name: "rencm",
-            archive: Archive::Optional,
+            archive: ArchiveRequired::Optional,
             run: rencm,
         },
         RencmArgs::command(),

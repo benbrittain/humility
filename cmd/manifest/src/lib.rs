@@ -43,7 +43,7 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility_cmd::{Archive, Command};
+use humility_cmd::{ArchiveRequired, Command};
 
 #[derive(Parser, Debug)]
 #[clap(name = "manifest", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -61,7 +61,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Unattached {
             name: "manifest",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             run: manifestcmd,
         },
         ManifestArgs::command(),

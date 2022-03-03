@@ -7,7 +7,7 @@
 //! read, eval, print, loop
 
 use anyhow::Result;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use clap::Command as ClapCommand;
 
 use std::io::{self, Write};
@@ -60,7 +60,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "repl",
-            archive: Archive::Required,
+            archive: ArchiveRequired::Required,
             attach: Attach::Any,
             validate: Validate::Match,
             run: repl,

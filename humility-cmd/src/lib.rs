@@ -19,7 +19,7 @@ use std::fmt;
 
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-pub enum Archive {
+pub enum ArchiveRequired {
     /// Load a Hubris archive, failing if one is not present
     Required,
     /// Load a Hubris archive if available (as either a command-line flag or
@@ -50,14 +50,14 @@ pub enum Validate {
 pub enum Command {
     Attached {
         name: &'static str,
-        archive: Archive,
+        archive: ArchiveRequired,
         attach: Attach,
         validate: Validate,
         run: fn(&mut humility::ExecutionContext) -> Result<()>,
     },
     Unattached {
         name: &'static str,
-        archive: Archive,
+        archive: ArchiveRequired,
         run: fn(&mut humility::ExecutionContext) -> Result<()>,
     },
 }

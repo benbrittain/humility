@@ -115,7 +115,7 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{Archive, Attach, Command, Dumper, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Dumper, Validate};
 use humility::cli::Subcommand;
 use std::convert::TryInto;
 
@@ -234,7 +234,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "readmem",
-            archive: Archive::Optional,
+            archive: ArchiveRequired::Optional,
             attach: Attach::Any,
             validate: Validate::None,
             run: readmem,

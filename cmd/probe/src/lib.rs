@@ -90,7 +90,7 @@ use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::arch::ARMRegister;
-use humility_cmd::{Archive, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility_cortex::debug::*;
 use humility_cortex::itm::*;
 use humility_cortex::scs::*;
@@ -371,7 +371,7 @@ pub fn init() -> (Command, ClapCommand<'static>) {
     (
         Command::Attached {
             name: "probe",
-            archive: Archive::Optional,
+            archive: ArchiveRequired::Optional,
             attach: Attach::LiveOnly,
             validate: Validate::None,
             run: probecmd,
