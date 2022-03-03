@@ -22,10 +22,10 @@ use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use hif::*;
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility::cli::Subcommand;
-use humility_cmd::hiffy::*;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::idol;
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use std::collections::HashSet;
@@ -322,11 +322,13 @@ fn sensors(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "sensors",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: sensors,
         },
         SensorsArgs::command(),

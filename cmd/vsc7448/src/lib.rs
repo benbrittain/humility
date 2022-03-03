@@ -4,11 +4,11 @@
 use std::collections::BTreeMap;
 use std::convert::TryInto;
 
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::{HiffyContext, HiffyFunctions};
-use humility_cmd::{ArchiveRequired, Attach, Validate};
-use humility::cli::Subcommand;
+use humility_cmd::{ArchiveRequired, Attach, Validate, AttachementMetadata};
 use humility_cmd_spi::spi_task;
 
 use anyhow::{anyhow, bail, Result};
@@ -482,19 +482,22 @@ pub fn init() -> (humility_cmd::Command, ClapCommand<'static>) {
     // or attached device; skipping those steps improves runtime (especially
     // in debug builds)
     let subcmd_attached = (
-        humility_cmd::Command::Attached {
+        humility_cmd::Command {
             name: "vsc7448",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: vsc7448,
         },
         Vsc7448Args::command(),
     );
     let subcmd_unattached = (
-        humility_cmd::Command::Unattached {
+        humility_cmd::Command {
             name: "vsc7448",
             archive: ArchiveRequired::Ignored,
+            attatchment_metadata: None,
             run: vsc7448_get_info,
         },
         Vsc7448Args::command(),

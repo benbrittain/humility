@@ -625,9 +625,10 @@ fn etmcmd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "etm",
             archive: ArchiveRequired::Required,
+            attatchment_metadata: None,
             run: etmcmd,
         },
         EtmArgs::command(),

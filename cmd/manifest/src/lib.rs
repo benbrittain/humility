@@ -59,9 +59,10 @@ fn manifestcmd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "manifest",
             archive: ArchiveRequired::Required,
+            attatchment_metadata: None,
             run: manifestcmd,
         },
         ManifestArgs::command(),

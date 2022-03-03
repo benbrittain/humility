@@ -114,9 +114,9 @@
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility::hubris::*;
-use humility_cmd::{ArchiveRequired, Attach, Command, Dumper, Validate};
 use humility::cli::Subcommand;
+use humility::hubris::*;
+use humility_cmd::{ArchiveRequired, Attach, Command, Dumper, Validate, AttachementMetadata};
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]
@@ -232,11 +232,13 @@ fn readmem(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "readmem",
             archive: ArchiveRequired::Optional,
-            attach: Attach::Any,
-            validate: Validate::None,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::Any,
+                validate: Validate::None,
+            }),
             run: readmem,
         },
         ReadmemArgs::command(),

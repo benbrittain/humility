@@ -39,10 +39,10 @@
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
-use humility::cli::Subcommand;
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate, AttachementMetadata};
 
 #[derive(Parser, Debug)]
 #[clap(name = "readvar", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -112,11 +112,13 @@ fn readvar(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "readvar",
             archive: ArchiveRequired::Required,
-            attach: Attach::Any,
-            validate: Validate::Match,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::Any,
+                validate: Validate::Match,
+            }),
             run: readvar,
         },
         ReadvarArgs::command(),

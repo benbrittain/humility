@@ -2,9 +2,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-use humility::core::Core;
-use humility_cmd::{hiffy::*, ArchiveRequired, Attach, Command, Dumper, Validate};
 use humility::cli::Subcommand;
+use humility::core::Core;
+use humility_cmd::{ArchiveRequired, hiffy::*, AttachementMetadata, Attach, Command, Dumper, Validate};
 use std::fmt;
 use std::fs;
 use std::fs::File;
@@ -630,11 +630,13 @@ impl fmt::Display for DeviceIdData {
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "qspi",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: qspi,
         },
         QspiArgs::command(),

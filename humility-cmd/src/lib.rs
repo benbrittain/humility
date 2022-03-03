@@ -14,7 +14,6 @@ use anyhow::{bail, Result};
 use humility::cli::Cli;
 use humility::core::Core;
 use humility::hubris::*;
-use std::fmt;
 
 
 #[allow(dead_code)]
@@ -47,44 +46,16 @@ pub enum Validate {
     None,
 }
 
-pub enum Command {
-    Attached {
-        name: &'static str,
-        archive: ArchiveRequired,
-        attach: Attach,
-        validate: Validate,
-        run: fn(&mut humility::ExecutionContext) -> Result<()>,
-    },
-    Unattached {
-        name: &'static str,
-        archive: ArchiveRequired,
-        run: fn(&mut humility::ExecutionContext) -> Result<()>,
-    },
+pub struct AttachementMetadata {
+    pub attach: Attach,
+    pub validate: Validate,
 }
 
-impl fmt::Debug for Command {
-    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Command::Attached{name, archive, attach, validate, .. } => {
-                fmt.debug_struct("Command::Attached")
-                    .field("name", name)
-                    .field("archive", archive)
-                    .field("attach", attach)
-                    .field("validate", validate)
-                    .field("run", &"{fn}")
-                    .finish()
-
-            }
-            Command::Unattached{name, archive, .. } => {
-                fmt.debug_struct("Command::Unattached")
-                    .field("name", name)
-                    .field("archive", archive)
-                    .field("run", &"{fn}")
-                    .finish()
-
-            }
-        }
-    }
+pub struct Command {
+    pub name: &'static str,
+    pub archive: ArchiveRequired,
+    pub attatchment_metadata: Option<AttachementMetadata>,
+    pub run: fn(&mut humility::ExecutionContext) -> Result<()>,
 }
 
 

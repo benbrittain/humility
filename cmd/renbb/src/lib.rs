@@ -2,9 +2,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-use humility::hubris::*;
-use humility_cmd::hiffy::*;
 use humility::cli::Subcommand;
+use humility::hubris::*;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::i2c::I2cArgs;
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
@@ -283,11 +283,13 @@ fn renbb(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "renbb",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: renbb,
         },
         RenbbArgs::command(),

@@ -7,8 +7,8 @@
 //! read, eval, print, loop
 
 use anyhow::Result;
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use clap::Command as ClapCommand;
+use humility_cmd::{ArchiveRequired, Attach, Validate, AttachementMetadata, Command};
 
 use std::io::{self, Write};
 
@@ -58,11 +58,13 @@ fn eval(context: &mut humility::ExecutionContext, input: &str) -> Result<String>
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "repl",
             archive: ArchiveRequired::Required,
-            attach: Attach::Any,
-            validate: Validate::Match,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::Any,
+                validate: Validate::Match,
+            }),
             run: repl,
         },
         ClapCommand::new("repl"),

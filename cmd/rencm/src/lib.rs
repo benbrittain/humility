@@ -807,9 +807,10 @@ fn rencm(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "rencm",
             archive: ArchiveRequired::Optional,
+            attatchment_metadata: None,
             run: rencm,
         },
         RencmArgs::command(),

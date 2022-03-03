@@ -66,9 +66,10 @@ fn doc(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "doc",
             archive: ArchiveRequired::Ignored,
+            attatchment_metadata: None,
             run: doc,
         },
         DocArgs::command(),

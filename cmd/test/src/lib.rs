@@ -112,7 +112,7 @@ use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::test::*;
+use humility_cmd::{test::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
 use humility_cortex::itm::*;
@@ -303,11 +303,13 @@ fn test(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "test",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: test,
         },
         TestArgs::command(),

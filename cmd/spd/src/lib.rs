@@ -2,10 +2,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-use humility_cmd::hiffy::*;
+use humility::cli::Subcommand;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::i2c::I2cArgs;
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
-use humility::cli::Subcommand;
 use std::str;
 
 use anyhow::{bail, Result};
@@ -353,11 +353,13 @@ fn spd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "spd",
             archive: ArchiveRequired::Required,
-            attach: Attach::Any,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::Any,
+                validate: Validate::Booted,
+            }),
             run: spd,
         },
         SpdArgs::command(),

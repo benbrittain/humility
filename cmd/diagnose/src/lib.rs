@@ -20,7 +20,7 @@ use clap::{CommandFactory, Parser};
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::doppel::{GenOrRestartCount, Task, TaskDesc, TaskState};
-use humility_cmd::jefe;
+use humility_cmd::{jefe, AttachementMetadata};
 use humility_cmd::reflect;
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
@@ -30,11 +30,13 @@ use std::time::Duration;
 /// Command registration.
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "diagnose",
             archive: ArchiveRequired::Required,
-            attach: Attach::Any,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::Any,
+                validate: Validate::Booted,
+            }),
             run: diagnose,
         },
         DiagnoseArgs::command(),

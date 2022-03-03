@@ -157,10 +157,11 @@ fn apptablecmd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "apptable",
             archive: ArchiveRequired::Optional,
             run: apptablecmd,
+            attatchment_metadata: None,
         },
         ApptableArgs::command().hide(true),
     )

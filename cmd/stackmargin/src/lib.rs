@@ -31,7 +31,7 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate, AttachementMetadata};
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]
@@ -118,11 +118,13 @@ fn stackmargin(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "stackmargin",
             archive: ArchiveRequired::Required,
-            attach: Attach::Any,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::Any,
+                validate: Validate::Booted,
+            }),
             run: stackmargin,
         },
         StackmarginArgs::command(),

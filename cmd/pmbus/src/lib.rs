@@ -3,10 +3,10 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use colored::Colorize;
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::hiffy::*;
-use humility::cli::Subcommand;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::i2c::I2cArgs;
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
@@ -1617,11 +1617,13 @@ fn pmbus(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "pmbus",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: pmbus,
         },
         PmbusArgs::command(),

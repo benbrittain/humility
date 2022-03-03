@@ -92,9 +92,8 @@
 //! ```
 //!
 
-use humility_cmd::hiffy::*;
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
+use humility_cmd::{hiffy::*, AttachementMetadata, ArchiveRequired, Attach, Command, Validate};
 use std::str;
 
 use anyhow::{bail, Result};
@@ -340,12 +339,14 @@ fn gpio(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "gpio",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
             run: gpio,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
         },
         GpioArgs::command(),
     )

@@ -4,9 +4,8 @@
 
 use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
-use humility::hubris::*;
-use humility::cli::Subcommand;
-use humility_cmd::{ArchiveRequired, Command};
+use humility::{hubris::*, cli::Subcommand};
+use humility_cmd::{ArchiveRequired, AttachementMetadata, Command};
 use std::collections::HashMap;
 
 //
@@ -33,14 +32,10 @@ pub fn init(
     });
 
     for dcmd in dcmds {
-        let (cmd, subcmd) = (dcmd.init)();
+        let (command, subcmd) = (dcmd.init)();
 
-        let name = match cmd {
-            Command::Attached { name, .. } => name,
-            Command::Unattached { name, .. } => name,
-        };
+        cmds.insert(command.name, command);
 
-        cmds.insert(name, cmd);
 
         rval = rval.subcommand(subcmd.after_help(dcmd.docmsg));
     }
@@ -58,15 +53,9 @@ pub fn subcommand(
     let command = commands.get(&*subargs)
         .with_context(|| format!("command {} not found", subargs))?;
 
-    let archive = match command {
-        Command::Attached { archive, .. } => archive,
-        Command::Unattached { archive, .. } => archive,
-    };
+    let mut hubris = HubrisArchive::new().context("failed to initialize")?;
 
-    let mut hubris =
-        HubrisArchive::new().context("failed to initialize")?;
-
-    if *archive != ArchiveRequired::Ignored {
+    if command.archive != ArchiveRequired::Ignored {
         if let Some(archive) = &context.cli.archive {
             hubris.load(archive).with_context(|| {
                 format!("failed to load archive \"{}\"", archive)
@@ -78,23 +67,18 @@ pub fn subcommand(
         }
     }
 
-    if *archive == ArchiveRequired::Required && !hubris.loaded() {
+    if command.archive == ArchiveRequired::Required && !hubris.loaded() {
         bail!("must provide a Hubris archive or dump");
     }
 
     context.archive = Some(hubris);
 
-    match command {
-        Command::Attached { run, attach, validate, .. } => {
-            humility_cmd::attach(
-                context,
-                *attach,
-                *validate,
-                |context| (run)(context),
-            )
+    match command.attatchment_metadata {
+        Some(AttachementMetadata { attach, validate, }) => {
+            humility_cmd::attach(context, attach, validate, |context| {
+                (command.run)(context)
+            })
         }
-        Command::Unattached { run, .. } => {
-            (run)(context)
-        }
+        None => (command.run)(context),
     }
 }

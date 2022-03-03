@@ -276,9 +276,10 @@ fn flashcmd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "flash",
             archive: ArchiveRequired::Required,
+            attatchment_metadata: None,
             run: flashcmd,
         },
         FlashArgs::command(),

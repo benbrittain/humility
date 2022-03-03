@@ -338,9 +338,10 @@ fn itmcmd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Unattached {
+        Command {
             name: "itm",
             archive: ArchiveRequired::Optional,
+            attatchment_metadata: None,
             run: itmcmd,
         },
         ItmArgs::command(),

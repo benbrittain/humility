@@ -51,8 +51,8 @@
 use anyhow::Result;
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use humility::cli::Subcommand;
+use humility_cmd::{ArchiveRequired, Attach, Command, Validate, AttachementMetadata};
 
 #[derive(Parser, Debug)]
 #[clap(name = "dump", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -82,11 +82,13 @@ fn dumpcmd(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command::Attached {
+        Command {
             name: "dump",
             archive: ArchiveRequired::Required,
-            attach: Attach::LiveOnly,
-            validate: Validate::Booted,
+            attatchment_metadata: Some(AttachementMetadata {
+                attach: Attach::LiveOnly,
+                validate: Validate::Booted,
+            }),
             run: dumpcmd,
         },
         DumpArgs::command(),

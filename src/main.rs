@@ -7,13 +7,13 @@ use std::ffi::OsString;
 
 use anyhow::bail;
 use clap::ArgMatches;
-use humility_cmd::Command;
 use humility::cli::Cli;
 
 use clap::CommandFactory;
 use clap::FromArgMatches;
 use clap::Parser;
 use anyhow::Result;
+use humility_cmd::Command;
 
 mod cmd;
 mod repl;
