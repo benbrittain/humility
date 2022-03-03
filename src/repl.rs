@@ -44,7 +44,8 @@ fn eval(context: &mut humility::ExecutionContext, input: &str) -> Result<String>
             let mut input = vec!["humility"];
             input.extend(user_input.split(' '));
 
-            let (commands, _, _args) = crate::parse_args(input);
+            let (commands, _, cli) = crate::parse_args(input);
+            context.cli = cli;
             if let Err(e) = cmd::subcommand(context, &commands) {
                 Ok(format!(
                     "I'm sorry, Dave. I'm afraid I can't understand that. {e}",
