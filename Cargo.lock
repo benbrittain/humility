@@ -2018,7 +2018,7 @@ dependencies = [
 [[package]]
 name = "spdm"
 version = "0.1.0"
-source = "git+https://github.com/oxidecomputer/spdm.git?branch=main#5bf64da95553c29f4dc2419773e4eca131197e3d"
+source = "git+https://github.com/oxidecomputer/spdm.git?branch=main#475f6afd026c51fd15cd9fba1c9a6a42e1973cd7"
 dependencies = [
  "anyhow",
  "bitflags",
