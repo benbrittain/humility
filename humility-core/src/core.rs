@@ -3,7 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use probe_rs::MemoryInterface;
-use probe_rs::Probe;
+use probe_rs::{flashing, Probe};
 
 use anyhow::{anyhow, bail, ensure, Result};
 
@@ -17,6 +17,7 @@ use std::fs;
 use std::io::Read;
 use std::io::Write;
 use std::net::TcpStream;
+use std::path::Path;
 use std::str;
 use std::time::Duration;
 use std::time::Instant;
@@ -45,6 +46,9 @@ pub trait Core {
         self.read_8(addr, &mut buf)?;
         Ok(u64::from_le_bytes(buf))
     }
+
+    fn load(&mut self, path: &Path) -> Result<()>;
+    fn reset(&mut self) -> Result<()>;
 }
 
 pub struct ProbeCore {
@@ -219,6 +223,26 @@ impl Core for ProbeCore {
 
     fn read_swv(&mut self) -> Result<Vec<u8>> {
         Ok(self.session.read_swo()?)
+    }
+
+    fn load(&mut self, path: &Path) -> Result<()> {
+        match flashing::download_file(
+            &mut self.session,
+            path,
+            flashing::Format::Hex,
+        ) {
+            Err(e) => bail!("Flash loading failed {:?}", e),
+            Ok(_) => (),
+        };
+
+        self.reset()?;
+        Ok(())
+    }
+
+    fn reset(&mut self) -> Result<()> {
+        let mut core = self.session.core(0)?;
+        core.reset()?;
+        Ok(())
     }
 }
 
@@ -493,6 +517,14 @@ impl Core for OpenOCDCore {
 
     fn step(&mut self) -> Result<()> {
         todo!();
+    }
+
+    fn load(&mut self, _path: &Path) -> Result<()> {
+        bail!("Flash loading is not supported with OpenOCD");
+    }
+
+    fn reset(&mut self) -> Result<()> {
+        bail!("Reset is not supported with OpenOCD");
     }
 }
 
@@ -820,6 +852,14 @@ impl Core for GDBCore {
     fn read_swv(&mut self) -> Result<Vec<u8>> {
         Err(anyhow!("GDB target does not support SWV"))
     }
+
+    fn load(&mut self, _path: &Path) -> Result<()> {
+        bail!("Flash loading is not supported with GDB");
+    }
+
+    fn reset(&mut self) -> Result<()> {
+        bail!("Reset is not supported with GDB");
+    }
 }
 
 pub struct DumpCore {
@@ -953,6 +993,14 @@ impl Core for DumpCore {
 
     fn is_dump(&self) -> bool {
         true
+    }
+
+    fn load(&mut self, _path: &Path) -> Result<()> {
+        bail!("Flash loading is not supported on a dump");
+    }
+
+    fn reset(&mut self) -> Result<()> {
+        bail!("Reset is not supported on a dump");
     }
 }
 

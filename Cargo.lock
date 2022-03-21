@@ -942,6 +942,7 @@ dependencies = [
  "log",
  "num-traits",
  "path-slash",
+ "regex",
  "ron 0.7.0",
  "serde",
  "tempfile",

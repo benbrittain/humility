@@ -16,3 +16,4 @@ serde = { version = "1.0.126", features = ["derive"] }
 tempfile = "3.3"
 ron = "0.7"
 path-slash = "0.1.4"
+regex = "1.5.5"
