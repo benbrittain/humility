@@ -38,6 +38,7 @@ pub fn init(
         cmd_renbb::init,
         cmd_rencm::init,
         cmd_ringbuf::init,
+        cmd_rot_sprocket::init,
         cmd_sensors::init,
         cmd_spd::init,
         cmd_spdm::init,

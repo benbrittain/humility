@@ -31,6 +31,7 @@ members = [
     "cmd/renbb",
     "cmd/rencm",
     "cmd/ringbuf",
+    "cmd/rot-sprocket",
     "cmd/sensors",
     "cmd/spd",
     "cmd/spdm",
@@ -79,6 +80,7 @@ cmd-readvar = { path = "./cmd/readvar", package = "humility-cmd-readvar" }
 cmd-renbb = { path = "./cmd/renbb", package = "humility-cmd-renbb" }
 cmd-rencm = { path = "./cmd/rencm", package = "humility-cmd-rencm" }
 cmd-ringbuf = { path = "./cmd/ringbuf", package = "humility-cmd-ringbuf" }
+cmd-rot-sprocket = { path = "./cmd/rot-sprocket", package = "humility-cmd-rot-sprocket" }
 cmd-sensors = { path = "./cmd/sensors", package = "humility-cmd-sensors" }
 cmd-spd = { path = "./cmd/spd", package = "humility-cmd-spd" }
 cmd-spdm = { path = "./cmd/spdm", package = "humility-cmd-spdm" }
