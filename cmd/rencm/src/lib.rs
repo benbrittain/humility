@@ -8,12 +8,14 @@
 //! Renesas configuration software.
 //!
 
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::hiffy::*;
-use humility::cli::Subcommand;
 use humility_cmd::i2c::I2cArgs;
-use humility_cmd::{attach, ArchiveRequired, Attach, Command, Dumper, Validate};
+use humility_cmd::{
+    attach, ArchiveRequired, Attach, Command, Dumper, Validate,
+};
 
 use itertools::Itertools;
 
@@ -787,9 +789,7 @@ fn rencm_ingest(subargs: &RencmArgs, modules: &[Module]) -> Result<()> {
     Ok(())
 }
 
-fn rencm(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn rencm(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let subargs = RencmArgs::try_parse_from(subargs)?;
     let modules = modules();

@@ -84,11 +84,13 @@
 use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
+use humility::cli::Subcommand;
 use humility::hubris::*;
 use humility_cmd::jefe::{send_request, JefeRequest};
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate, AttachementMetadata};
+use humility_cmd::{
+    ArchiveRequired, Attach, AttachementMetadata, Command, Validate,
+};
 use std::num::NonZeroU32;
-use humility::cli::Subcommand;
 
 #[derive(Parser, Debug)]
 #[clap(name = "jefe", about = env!("CARGO_PKG_DESCRIPTION"))]
@@ -119,9 +121,7 @@ struct JefeArgs {
     task: String,
 }
 
-fn jefe(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn jefe(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

@@ -6,8 +6,8 @@ use colored::Colorize;
 use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::i2c::I2cArgs;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
 use anyhow::{bail, Result};
@@ -1284,9 +1284,7 @@ fn writes(
 }
 
 #[allow(clippy::print_literal)]
-fn pmbus(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn pmbus(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
     let subargs = PmbusArgs::try_parse_from(subargs)?;

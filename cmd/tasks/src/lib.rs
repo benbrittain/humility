@@ -120,7 +120,9 @@ use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::doppel::{self, Task, TaskDesc, TaskId, TaskState};
 use humility_cmd::reflect::{self, Format, Load};
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate, AttachementMetadata};
+use humility_cmd::{
+    ArchiveRequired, Attach, AttachementMetadata, Command, Validate,
+};
 use num_traits::FromPrimitive;
 use std::collections::HashMap;
 
@@ -233,9 +235,7 @@ fn print_regs(regs: &HashMap<ARMRegister, u32>, additional: bool) {
 }
 
 #[rustfmt::skip::macros(println)]
-fn tasks(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn tasks(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
@@ -648,7 +648,7 @@ fn explain_recv(
 
 pub fn init() -> (Command, ClapCommand<'static>) {
     (
-        Command{
+        Command {
             name: "tasks",
             archive: ArchiveRequired::Required,
             attatchment_metadata: Some(AttachementMetadata {

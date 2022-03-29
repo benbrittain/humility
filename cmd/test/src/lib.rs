@@ -110,11 +110,11 @@
 use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
 use humility_cmd::{test::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
-use humility::cli::Subcommand;
 use humility_cortex::itm::*;
 use std::cell::RefCell;
 use std::collections::VecDeque;
@@ -283,9 +283,7 @@ fn test_ingest(
     }
 }
 
-fn test(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn test(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

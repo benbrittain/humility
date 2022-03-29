@@ -49,9 +49,7 @@ use humility_cmd::{ArchiveRequired, Command};
 #[clap(name = "manifest", about = env!("CARGO_PKG_DESCRIPTION"))]
 struct ManifestArgs {}
 
-fn manifestcmd(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn manifestcmd(context: &mut humility::ExecutionContext) -> Result<()> {
     let hubris = context.archive.as_ref().unwrap();
     hubris.manifest()?;
     Ok(())

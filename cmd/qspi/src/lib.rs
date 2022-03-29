@@ -4,7 +4,10 @@
 
 use humility::cli::Subcommand;
 use humility::core::Core;
-use humility_cmd::{ArchiveRequired, hiffy::*, AttachementMetadata, Attach, Command, Dumper, Validate};
+use humility_cmd::{
+    hiffy::*, ArchiveRequired, Attach, AttachementMetadata, Command, Dumper,
+    Validate,
+};
 use std::fmt;
 use std::fs;
 use std::fs::File;
@@ -141,9 +144,7 @@ fn optional_nbytes<'a>(
     }
 }
 
-fn qspi(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn qspi(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

@@ -5,9 +5,9 @@
 use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility::cli::Subcommand;
 use humility_cmd::attach_live;
 use humility_cmd::{ArchiveRequired, Command};
 use humility_cortex::debug::*;
@@ -554,9 +554,7 @@ fn etmcmd_output(core: &mut dyn Core) -> Result<()> {
     }
 }
 
-fn etmcmd(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn etmcmd(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 

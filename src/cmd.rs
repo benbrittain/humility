@@ -4,7 +4,7 @@
 
 use anyhow::{bail, Context, Result};
 use clap::Command as ClapCommand;
-use humility::{hubris::*, cli::Subcommand};
+use humility::{cli::Subcommand, hubris::*};
 use humility_cmd::{ArchiveRequired, AttachementMetadata, Command};
 use std::collections::HashMap;
 
@@ -36,7 +36,6 @@ pub fn init(
 
         cmds.insert(command.name, command);
 
-
         rval = rval.subcommand(subcmd.after_help(dcmd.docmsg));
     }
 
@@ -50,7 +49,8 @@ pub fn subcommand(
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let subargs = subargs[0].clone();
 
-    let command = commands.get(&*subargs)
+    let command = commands
+        .get(&*subargs)
         .with_context(|| format!("command {} not found", subargs))?;
 
     let mut hubris = HubrisArchive::new().context("failed to initialize")?;
@@ -61,9 +61,9 @@ pub fn subcommand(
                 format!("failed to load archive \"{}\"", archive)
             })?;
         } else if let Some(dump) = &context.cli.dump {
-            hubris.load_dump(dump).with_context(|| {
-                format!("failed to load dump \"{}\"", dump)
-            })?;
+            hubris
+                .load_dump(dump)
+                .with_context(|| format!("failed to load dump \"{}\"", dump))?;
         }
     }
 
@@ -74,7 +74,7 @@ pub fn subcommand(
     context.archive = Some(hubris);
 
     match command.attatchment_metadata {
-        Some(AttachementMetadata { attach, validate, }) => {
+        Some(AttachementMetadata { attach, validate }) => {
             humility_cmd::attach(context, attach, validate, |context| {
                 (command.run)(context)
             })

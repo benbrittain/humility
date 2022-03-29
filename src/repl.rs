@@ -8,15 +8,15 @@
 
 use anyhow::Result;
 use clap::Command as ClapCommand;
-use humility_cmd::{ArchiveRequired, Attach, Validate, AttachementMetadata, Command};
+use humility_cmd::{
+    ArchiveRequired, Attach, AttachementMetadata, Command, Validate,
+};
 
 use std::io::{self, Write};
 
 use crate::cmd;
 
-fn repl(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn repl(context: &mut humility::ExecutionContext) -> Result<()> {
     let mut input = String::new();
 
     println!("Welcome to the humility REPL! Try out some subcommands, or 'quit' to quit!");
@@ -33,7 +33,10 @@ fn repl(
     }
 }
 
-fn eval(context: &mut humility::ExecutionContext, input: &str) -> Result<String> {
+fn eval(
+    context: &mut humility::ExecutionContext,
+    input: &str,
+) -> Result<String> {
     match input.trim() {
         "quit" => {
             println!("Quitting!");

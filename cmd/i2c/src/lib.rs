@@ -421,9 +421,7 @@ fn i2c_done(
     Ok(())
 }
 
-fn i2c(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn i2c(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

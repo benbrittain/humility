@@ -31,7 +31,9 @@ use anyhow::{bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use humility::hubris::*;
-use humility_cmd::{ArchiveRequired, Attach, Command, Validate, AttachementMetadata};
+use humility_cmd::{
+    ArchiveRequired, Attach, AttachementMetadata, Command, Validate,
+};
 use std::convert::TryInto;
 
 #[derive(Parser, Debug)]
@@ -39,9 +41,7 @@ use std::convert::TryInto;
 struct StackmarginArgs {}
 
 #[rustfmt::skip::macros(println, bail)]
-fn stackmargin(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn stackmargin(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 

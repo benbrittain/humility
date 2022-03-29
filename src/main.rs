@@ -9,15 +9,14 @@ use anyhow::bail;
 use clap::ArgMatches;
 use humility::cli::Cli;
 
+use anyhow::Result;
 use clap::CommandFactory;
 use clap::FromArgMatches;
 use clap::Parser;
-use anyhow::Result;
 use humility_cmd::Command;
 
 mod cmd;
 mod repl;
-
 
 fn main() -> Result<()> {
     let (commands, m, args) = parse_args(&mut std::env::args_os());
@@ -44,7 +43,9 @@ fn main() -> Result<()> {
     cmd::subcommand(&mut context, &commands)
 }
 
-pub fn parse_args<I, T>(input: I) -> (HashMap<&'static str, Command>, ArgMatches, Cli)
+pub fn parse_args<I, T>(
+    input: I,
+) -> (HashMap<&'static str, Command>, ArgMatches, Cli)
 where
     I: IntoIterator<Item = T>,
     T: Into<OsString> + Clone,

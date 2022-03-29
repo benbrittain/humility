@@ -41,16 +41,16 @@
 //! within Humility, use `-L` (`--list-functions`).
 //!
 
-use humility::cli::Subcommand;
 use ::idol::syntax::{Operation, Reply};
 use anyhow::{anyhow, bail, Result};
 use clap::Command as ClapCommand;
 use clap::{CommandFactory, Parser};
 use hif::*;
+use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::idol;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
 #[derive(Parser, Debug)]
@@ -207,9 +207,7 @@ fn hiffy_call(
     Ok(())
 }
 
-fn hiffy(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn hiffy(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

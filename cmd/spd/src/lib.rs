@@ -3,8 +3,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 use humility::cli::Subcommand;
-use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::i2c::I2cArgs;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use std::str;
 
@@ -143,9 +143,7 @@ fn set_page(ops: &mut Vec<Op>, i2c_write: &HiffyFunction, page: u8) {
     ops.push(Op::DropN(4));
 }
 
-fn spd(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn spd(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
     let core = &mut **context.core.as_mut().unwrap();

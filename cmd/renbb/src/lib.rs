@@ -4,8 +4,8 @@
 
 use humility::cli::Subcommand;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::i2c::I2cArgs;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 
 use anyhow::{bail, Result};
@@ -77,9 +77,7 @@ fn all_commands(
     all
 }
 
-fn renbb(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn renbb(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_mut().unwrap();
 

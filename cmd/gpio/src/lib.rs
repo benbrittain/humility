@@ -93,7 +93,9 @@
 //!
 
 use humility::cli::Subcommand;
-use humility_cmd::{hiffy::*, AttachementMetadata, ArchiveRequired, Attach, Command, Validate};
+use humility_cmd::{
+    hiffy::*, ArchiveRequired, Attach, AttachementMetadata, Command, Validate,
+};
 use std::str;
 
 use anyhow::{bail, Result};
@@ -149,9 +151,7 @@ struct GpioArgs {
     pins: Option<Vec<String>>,
 }
 
-fn gpio(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn gpio(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

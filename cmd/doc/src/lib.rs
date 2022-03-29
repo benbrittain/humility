@@ -28,10 +28,7 @@ struct DocArgs {
     command: Option<String>,
 }
 
-
-fn doc(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn doc(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let subargs = DocArgs::try_parse_from(subargs)?;
 

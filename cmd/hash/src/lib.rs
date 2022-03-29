@@ -100,9 +100,7 @@ struct HashArgs {
     long: bool,
 }
 
-fn hash(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn hash(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
 

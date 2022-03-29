@@ -27,8 +27,8 @@ use hif::*;
 use humility::cli::Subcommand;
 use humility::core::Core;
 use humility::hubris::*;
-use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::idol;
+use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Validate};
 use std::fs::File;
 use std::io;
@@ -660,13 +660,11 @@ fn run_dashboard<B: Backend>(
     }
 }
 
-fn dashboard(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn dashboard(context: &mut humility::ExecutionContext) -> Result<()> {
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();
 
-    let core = &mut ** context.core.as_mut().unwrap();
+    let core = &mut **context.core.as_mut().unwrap();
 
     let subargs = DashboardArgs::try_parse_from(subargs)?;
     let dashboard = Dashboard::new(hubris, core, &subargs)?;

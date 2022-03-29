@@ -32,10 +32,10 @@
 //! ```
 //!
 
+use humility::cli::Subcommand;
 use humility::hubris::*;
 use humility_cmd::{hiffy::*, AttachementMetadata};
 use humility_cmd::{ArchiveRequired, Attach, Command, Dumper, Validate};
-use humility::cli::Subcommand;
 
 use std::convert::TryInto;
 use std::str;
@@ -160,9 +160,7 @@ pub fn spi_task(
     Ok(task)
 }
 
-fn spi(
-    context: &mut humility::ExecutionContext,
-) -> Result<()> {
+fn spi(context: &mut humility::ExecutionContext) -> Result<()> {
     let core = &mut **context.core.as_mut().unwrap();
     let Subcommand::Other(subargs) = context.cli.cmd.as_ref().unwrap();
     let hubris = context.archive.as_ref().unwrap();

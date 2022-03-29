@@ -15,7 +15,6 @@ use humility::cli::Cli;
 use humility::core::Core;
 use humility::hubris::*;
 
-
 #[allow(dead_code)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum ArchiveRequired {
@@ -58,7 +57,6 @@ pub struct Command {
     pub run: fn(&mut humility::ExecutionContext) -> Result<()>,
 }
 
-
 pub fn attach_live(args: &Cli) -> Result<Box<dyn Core>> {
     if args.dump.is_some() {
         bail!("must be run against a live system");
@@ -92,8 +90,7 @@ pub fn attach(
     let hubris = context.archive.as_ref().unwrap();
 
     if context.core.is_none() {
-        context.core = Some(
-            match attach {
+        context.core = Some(match attach {
             Attach::LiveOnly => attach_live(&context.cli),
             Attach::DumpOnly => attach_dump(&context.cli, hubris),
             Attach::Any => {

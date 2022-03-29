@@ -2,15 +2,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-use anyhow::{Result, bail};
+use anyhow::{bail, Result};
 use clap::ArgMatches;
 use cli::Cli;
 use hubris::HubrisArchive;
 
 pub mod arch;
+pub mod cli;
 pub mod core;
 pub mod hubris;
-pub mod cli;
 
 #[macro_use]
 extern crate num_derive;
@@ -52,8 +52,10 @@ impl ExecutionContext {
         // line) to win the conflict.
         //
         if cli.dump.is_some() && cli.archive.is_some() {
-            match (m.occurrences_of("dump") == 1, m.occurrences_of("archive") == 1)
-            {
+            match (
+                m.occurrences_of("dump") == 1,
+                m.occurrences_of("archive") == 1,
+            ) {
                 (true, true) => {
                     bail!("cannot specify both a dump and an archive");
                 }
@@ -82,7 +84,7 @@ impl ExecutionContext {
             }
         }
 
-        Ok(ExecutionContext { 
+        Ok(ExecutionContext {
             core: None,
             history: Vec::new(),
             archive: None,
