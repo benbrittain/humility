@@ -314,7 +314,7 @@ fn diagnose(context: &mut humility::ExecutionContext) -> Result<()> {
         for &(name, i) in &tasks_worth_holding {
             println!("- {}", name);
             jefe::send_request(
-                &hubris,
+                hubris,
                 core,
                 jefe::JefeRequest::Hold,
                 i,
